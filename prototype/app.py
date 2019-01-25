@@ -26,15 +26,16 @@ def search(page):
     name = request.args.get('name')
     color = request.args.get('color')
     set_name = request.args.get('set')
+    card_type = request.args.get('type')
 
     #Need multiverseId for searching, otherwise you get duplicates AND it's a unique id for each card which we want
-    cards = Card.where(name=name, page=page, colors=color, setName=set_name, contains='multiverseId').where(pageSize=10).all()
+    cards = Card.where(name=name, page=page, types=card_type, colors=color, setName=set_name, contains='multiverseId').where(pageSize=10).all()
 
     hasPrev = False
     hasNext = False
     if(page > 1):
         hasPrev = True
-    nextPageCards = Card.where(name=name, page=page+1, colors=color, setName=set_name, contains='multiverseId').where(pageSize=10).all()
+    nextPageCards = Card.where(name=name, page=page+1, types=card_type, colors=color, setName=set_name, contains='multiverseId').where(pageSize=10).all()
     if(len(nextPageCards) > 0):
         hasNext = True
 

@@ -6,13 +6,16 @@ Card drafting simulator
 [Python 3.4 or higher](https://www.python.org/downloads/)
 
 [Flask](http://flask.pocoo.org/) :
-pip install flask
+
+    pip install flask
 
 [mtgsdk](https://docs.magicthegathering.io/) :
-pip install mtgsdk
+
+    pip install mtgsdk
 
 Optional but recommended:
-pip install virtualenv
+
+    pip install virtualenv
 
 ## Running
 
