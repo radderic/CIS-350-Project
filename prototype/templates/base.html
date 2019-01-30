@@ -46,22 +46,21 @@
         <h2>Results</h2>
         <div>
         {% if hasPrev %}
-            <a href="{{url_for('search', page=page-1, 
-                name=request.args.get('name'), 
-                color=request.args.get('color'), 
+            <a href="{{url_for('search', page=page-1,
+                name=request.args.get('name'),
+                color=request.args.get('color'),
                 set=request.args.get('set'),
                 type=request.args.get('type'))}}">Previous Page</a>
         {% endif %}
         {% if hasNext %}
             <a href="{{url_for('search', page=page+1,
-                name=request.args.get('name'), 
-                color=request.args.get('color'), 
+                name=request.args.get('name'),
+                color=request.args.get('color'),
                 set=request.args.get('set'),
                 type=request.args.get('type'))}}">Next Page</a>
         {% endif %}
         </div>
         <div>
-        <form id="add-card" method="post">
         {% for card in cards %}
             <h3>{{ card.name }}</h3>
             <p>Text: {{ card.text }}</p>
@@ -69,23 +68,22 @@
             <p>Types: {{ card.types }}</p>
             <p>Id: {{ card.multiverse_id }}</p>
             <img src="{{card.image_url}}">
-            <button value='{"{{card.name}}":{{card.multiverse_id}}}' name="add_card" class="add-card">Add to deck</button>
+            <button value="{{ card.multiverse_id }}" name="add_card" class="add-card">Add to deck</button>
         {% endfor %}
-        </form>
         </div>
     </div>
     <div>
     {% if hasPrev %}
-        <a href="{{url_for('search', page=page-1, 
-            name=request.args.get('name'), 
-            color=request.args.get('color'), 
+        <a href="{{url_for('search', page=page-1,
+            name=request.args.get('name'),
+            color=request.args.get('color'),
             set=request.args.get('set'),
             type=request.args.get('type'))}}">Previous Page</a>
     {% endif %}
     {% if hasNext %}
         <a href="{{url_for('search', page=page+1,
-            name=request.args.get('name'), 
-            color=request.args.get('color'), 
+            name=request.args.get('name'),
+            color=request.args.get('color'),
             set=request.args.get('set'),
             type=request.args.get('type'))}}">Next Page</a>
     {% endif %}
