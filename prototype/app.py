@@ -22,27 +22,46 @@ def search(page):
     if(page < 1):
         return redirect(url_for('not_found'))
 
+    #create a draft_deck if it doesn't exist
+    if('draft_deck' not in session):
+        print('creating draft deck')
+        session['draft_deck'] = {}
+        session['draft_deck']['count'] = 0
+
+    #get string querys from url to use for search
     name = request.args.get('name')
     color = request.args.get('color')
     set_name = request.args.get('set')
     card_type = request.args.get('type')
 
-    #Need multiverseId for searching, otherwise you get duplicates AND it's a unique id for each card which we want
-    cards = Card.where(name=name, page=page, types=card_type, colors=color, setName=set_name, contains='multiverseId').where(pageSize=10).all()
+    #search using the mtgapi
+    cards = Card.where(name=name,
+            page=page,
+            types=card_type,
+            colors=color,
+            setName=set_name,
+            contains='multiverseId').where(pageSize=10).all()
 
     session['cache'] = {}
     for card in cards:
         session['cache'].update(MagicCard(card).to_dict())
 
+    #handle pagination
     hasPrev = False
     hasNext = False
     if(page > 1):
         hasPrev = True
-    nextPageCards = Card.where(name=name, page=page+1, types=card_type, colors=color, setName=set_name, contains='multiverseId').where(pageSize=10).all()
+    nextPageCards = Card.where(
+            name=name,
+            page=page+1,
+            types=card_type,
+            colors=color,
+            setName=set_name,
+            contains='multiverseId').where(pageSize=10).all()
     if(len(nextPageCards) > 0):
         hasNext = True
 
-    return render_template('base.html', set_names=set_names, cards=cards, hasNext=hasNext, hasPrev=hasPrev, page=page, session_deck=session['draft_deck'])
+    return render_template('base.html', set_names=set_names, cards=cards, hasNext=hasNext, hasPrev=hasPrev, page=page)
 
 @app.route('/')
 def index():
@@ -65,15 +84,36 @@ def add_card():
                 tmp[add_card] = {}
                 tmp[add_card].update(session['cache'][add_card])
                 session['draft_deck'].update(tmp)
-                session.modified = True
             else:
                 session['draft_deck'][add_card]['count'] += 1
-                session.modified = True
             session['draft_deck']['count'] += 1
+            session.modified = True
             return jsonify({'success' : dumps(session['draft_deck'])})
-        else:
-            return jsonify({'error': 'card not in cache'})
+        elif(add_card in session['draft_deck']):
+            session['draft_deck'][add_card]['count'] += 1
+            session['draft_deck']['count'] += 1
+            session.modified = True
+            return jsonify({'success' : dumps(session['draft_deck'])})
     return jsonify({'error': 'failed to add'})
+
+
+@app.route('/sub', methods=['POST'])
+def sub_card():
+    if('draft_deck' not in session):
+        return jsonify({'error': 'No cards to subtract'})
+
+    sub_card = request.form.get('sub_card')
+    if(sub_card and request.method == 'POST'):
+        if(sub_card not in session['draft_deck']):
+            return jsonify({'error': 'Card not found in deck'})
+        else:
+            if(session['draft_deck'][sub_card]['count'] == 1):
+                del session['draft_deck'][sub_card]
+            elif(session['draft_deck'][sub_card]['count'] > 1):
+                session['draft_deck'][sub_card]['count'] -= 1
+            session['draft_deck']['count'] -= 1
+            session.modified = True
+            return jsonify({'success' : dumps(session['draft_deck'])})
 
 @app.route('/fetch', methods=['POST'])
 def fetch():
@@ -86,6 +126,7 @@ def fetch():
 def clear():
     session['draft_deck'] = {}
     session['draft_deck']['count'] = 0
+    session.modified = True
     return jsonify({'success' : dumps(session['draft_deck'])})
 
 @app.route('/simulate')
