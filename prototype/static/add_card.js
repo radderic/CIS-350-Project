@@ -61,7 +61,7 @@ $(document).ready(function() {
 
 
 function reload_buttons() {
-    $('.add-card').on('click', function(event) {
+    $('.add-card').off().click(function(event) {
         $.ajax({
             data : {
                 add_card : $(this).val()
@@ -79,7 +79,7 @@ function reload_buttons() {
         })
         event.preventDefault();
     });
-    $('.sub-card').on('click', function(event) {
+    $('.sub-card').off().click(function(event) {
         $.ajax({
             data : {
                 sub_card : $(this).val()
