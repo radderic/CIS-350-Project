@@ -7,7 +7,6 @@ app = Flask(__name__)
 
 #create list for set names once then never again
 #Not sure if this is considered global among sessions
-print('getting all sets by name')
 sets = Set.all()
 set_names = []
 for s in sets:
@@ -24,7 +23,6 @@ def search(page):
 
     #create a draft_deck if it doesn't exist
     if('draft_deck' not in session):
-        print('creating draft deck')
         session['draft_deck'] = {}
         session['draft_deck']['count'] = 0
 
@@ -139,5 +137,5 @@ def not_found():
     return "404: Page not found"
 
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True, port=4999)
+    app.run(debug=True, use_reloader=True)
 

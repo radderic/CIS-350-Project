@@ -52,7 +52,7 @@ $(document).ready(function() {
                 collection = JSON.parse(data.success);
                 $("#draft-deck").text("");
                 let total = collection['count']
-                $("#draft-deck").append(`<p>Total cards: ${total}</p>`);
+                $(".total-cards").text(`Total cards: ${total}`);
             }
         })
         event.preventDefault();
@@ -104,15 +104,15 @@ function display_cards(data) {
     collection = JSON.parse(data);
     let total = collection['count']
     $("#draft-deck").text("");
-    $("#draft-deck").append(`<p>Total cards: ${total}</p>`);
+    $(".total-cards").text(`Total cards: ${total}`);
     for(card in collection) {
         if(card !== 'count') {
             let name = collection[card]['card_name']
             let count = collection[card]['count']
-            $("#draft-deck").append(`<div>
+            $("#draft-deck").append(`<div class="collection-card">
                 <p>${name} x ${count}</p>
-                <button value=${card} name="sub_card" class="sub-card">-</button>
                 <button value=${card} name="add_card" class="add-card">+</button>
+                <button value=${card} name="sub_card" class="sub-card">-</button>
                 </div>`);
         }
     }

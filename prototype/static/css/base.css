@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #222222;
+    color: white;
+}
+
+.titlebar {
+    color: #ff2222;
+    font-size: 2rem;
+    border-bottom: 2px solid grey;
+    background-color: #111111;
+    padding: 1rem 0rem 1rem 2rem;
+}
+
+.search-bar {
+    border: 2px solid white;
+    padding: 1rem;
+}
+
+.search-header {
+    font-size: 3rem;
+}
+
+.search-bar p {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.search-btn {
+    border: none;
+    text-decoration: none;
+    padding: .5rem 2rem;
+    background-color: lightgrey;
+}
+
+.search-btn:hover {
+    background-color: grey;
+}
+
+.search-options p {
+    display: inline;
+}
+
+.search-options {
+    display: inline;
+}
+
+main {
+    padding: 2rem 2rem 0 2rem;
+}
+
+.results-container {
+    max-width: 65%;
+    margin: 2rem 0;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    clear: both;
+    justify-content: space-around;
+}
+
+.card {
+    margin: 2rem 1rem;
+}
+
+.split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.collection {
+    top: 0;
+    position: sticky;
+    min-width: 40rem;
+    width: 25%;
+    background-color: #151515;
+    padding: 2rem;
+}
+
+.collection > h3 {
+    font-size: 3rem;
+    margin: 0 0 1rem 0;
+    border-bottom: 1px solid grey;
+    position: sticky;
+}
+
+.collection-card {
+    padding: 0.5rem;
+    margin: 1rem;
+    font-size: 2rem;
+    border: 1px solid orange;
+    background-color: lightgrey;
+    color: black;
+    overflow-x: auto;
+}
+
+.card-infobox {
+    display: none;
+}
+
+.card-image {
+    width: 20rem;
+}
+
+.collection-card > p {
+    display: inline;
+}
+
+.collection-header {
+    top: 0;
+    position: sticky;
+    background-color: #151515;
+    font-size: 2rem;
+    margin: .5rem 0;
+}
+
+.collection-card > button {
+    border: none;
+    text-decoration: none;
+    width: 4rem;
+    float: right;
+    font-size: 2rem;
+}
+
+.sub-card {
+    background-color: red;
+    border-radius: .5rem;
+}
+
+.sub-card:hover {
+    background-color: yellow;
+}
+
+
+.add-card {
+    border-radius: .5rem;
+}
+
+.add-card:hover {
+    background-color: lightgreen;
+}
+
+#draft-deck > p {
+    font-size: 2rem;
+}
+
+#draft-deck {
+    max-height: 100%;
+    overflow: auto;
+}
+
+.page-links {
+    padding: 2rem;
+    font-size: 2rem;
+}
+
+.page-control {
+    padding: .5rem 4rem;
+    background-color: darkorange;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+}
+
+.page-control:visited {color: black;}
+.page-control:focus {color: black;}
+
+.page-control:hover {
+    background-color: orange;
+    color: black;
+}
+
+.page-right {
+    float: right;
+}
+
+.page-left {
+    float: left;
+}
+
+#clear-deck {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 2rem;
+    border: none;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    background-color: red;
+}
+
+#clear-deck:hover {
+    background-color: yellow;
+}
+
+#simulate {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 2rem;
+    border: none;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    background-color: blue;
+}
+
+#simulate:hover {
+    background-color: lightblue;
+}
+
+
+
