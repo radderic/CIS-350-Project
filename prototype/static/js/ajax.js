@@ -1,12 +1,28 @@
 var collection;
 
-$(document).ready(function() {
+$.ajax({
+    data : {
+        fetch : "fetch"
+    },
+    type : 'POST',
+    url: '/fetch'
+})
+.done(function(data) {
+    if(data.error) {
+        console.log(data.error)
+    }
+    else {
+        display_cards(data.success);
+    }
+})
+
+$('.add-card').on('click', function(event) {
     $.ajax({
         data : {
-            fetch : "fetch"
+            add_card : $(this).val()
         },
         type : 'POST',
-        url: '/fetch'
+        url: '/add'
     })
     .done(function(data) {
         if(data.error) {
@@ -16,47 +32,29 @@ $(document).ready(function() {
             display_cards(data.success);
         }
     })
+    event.preventDefault();
+});
 
-    $('.add-card').on('click', function(event) {
-        $.ajax({
-            data : {
-                add_card : $(this).val()
-            },
-            type : 'POST',
-            url: '/add'
-        })
-        .done(function(data) {
-            if(data.error) {
-                console.log(data.error)
-            }
-            else {
-                display_cards(data.success);
-            }
-        })
-        event.preventDefault();
-    });
-
-    $('#clear-deck').on('click', function(event) {
-        $.ajax({
-            data : {
-                clear : "clear"
-            },
-            type : 'POST',
-            url: '/clear'
-        })
-        .done(function(data) {
-            if(data.error) {
-                console.log(data.error)
-            }
-            else {
-                collection = JSON.parse(data.success);
-                $("#draft-deck").text("");
-                let total = collection['count']
-                $(".total-cards").text(`Total cards: ${total}`);
-            }
-        })
-        event.preventDefault();
-    });
+$('#clear-deck').on('click', function(event) {
+    $.ajax({
+        data : {
+            clear : "clear"
+        },
+        type : 'POST',
+        url: '/clear'
+    })
+    .done(function(data) {
+        if(data.error) {
+            console.log(data.error)
+        }
+        else {
+            collection = JSON.parse(data.success);
+            $("#draft-deck").text("");
+            let total = collection['count']
+            $(".total-cards").text(`Total cards: ${total}`);
+        }
+    })
+    event.preventDefault();
 });
 
 

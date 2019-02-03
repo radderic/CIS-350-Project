@@ -11,6 +11,8 @@ html {
 body {
     background-color: #222222;
     color: white;
+    height: 100%;
+    width: 100%;
 }
 
 .titlebar {
@@ -194,6 +196,7 @@ main {
 }
 
 #clear-deck {
+    color: white;
     font-weight: 700;
     text-transform: uppercase;
     margin: 2rem;
@@ -201,13 +204,16 @@ main {
     text-decoration: none;
     padding: 1rem 2rem;
     background-color: red;
+    transition: .5s;
 }
 
 #clear-deck:hover {
+    color: black;
     background-color: yellow;
 }
 
 #simulate {
+    color: white;
     font-weight: 700;
     text-transform: uppercase;
     margin: 2rem;
@@ -215,11 +221,11 @@ main {
     text-decoration: none;
     padding: 1rem 2rem;
     background-color: blue;
+    transition: .5s;
 }
 
 #simulate:hover {
+    color: black;
     background-color: lightblue;
 }
-
-
 
