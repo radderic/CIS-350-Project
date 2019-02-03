@@ -129,7 +129,7 @@ def clear():
 
 @app.route('/simulate')
 def simulate():
-    return "TODO"
+    return render_template('simulate.html')
 
 @app.route('/invalid')
 def not_found():

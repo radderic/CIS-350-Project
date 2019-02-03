@@ -8,6 +8,7 @@ class MagicCard(object):
         self.colors = card.colors
         self.type = card.types
         self.set = card.set_name
+        self.rarity = card.rarity
 
         if(card.names):
             self.double_sided = True
@@ -28,6 +29,7 @@ class MagicCard(object):
                 "image_url": self.image_url,
                 "colors": self.colors,
                 "type": self.type,
+                "rarity": self.rarity,
                 "set": self.set,
                 "double-sided": self.double_sided,
                 "other-side": self.other_side,
@@ -42,6 +44,7 @@ class MagicCard(object):
                 "image_url": self.image_url,
                 "colors": self.colors,
                 "type": self.type,
+                "rarity": self.rarity,
                 "set": self.set,
                 "double-sided": self.double_sided,
                 "other-side": self.other_side,
