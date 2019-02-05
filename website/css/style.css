@@ -1,0 +1,256 @@
+/*web based font*/
+@import url('https://fonts.googleapis.com/css?family=Hammersmith+One');
+
+/*background styles and text alignment for header*/
+header{
+    background: #000000;
+    text-align: right;
+    color: #ffffff;
+    font-size: 1.05em;
+    font-family: "Hammersmith One", "Times New Roman", serif;
+    font-weight: bold;
+    text-shadow: 3px 3px 8px #000000;
+    padding: 1em;
+}
+
+/*removes underline from link in header*/
+header a{text-decoration:none;}
+
+/*styles logo*/
+header img{
+    float: left;
+    height: auto; 
+    max-width: 100px; 
+    margin-bottom: 3em;
+    background-color: #000000;
+}
+
+/*text properties and clear for nav*/
+nav{
+    font-family: "Century Gothic", Arial, sans-serif; 
+    font-size: 1em; 
+    text-align: center; 
+    clear: both;
+}
+
+/*text padding and margins for nav*/
+nav ul{
+    padding: 0; 
+    margin-top: 0.5em; 
+    margin-bottom: 0.5em; 
+    overflow: hidden;
+}
+
+/*background color, rounded corners, remove bullet style, and apply margin and padding for list of items in nav*/
+nav li{
+    list-style-type: none; 
+    background-color: #000000;
+    border-radius: 4em;
+    margin: 0.2em;
+    padding: 0.3em;
+}
+
+/*removes underline and changes nav link text color to white*/
+nav li a{
+    text-decoration: none; 
+    color: #ffffff;
+}
+
+/*background color for body*/
+body{background-color: #2e2e2e;}
+
+/*width for outerwrapper*/
+#outerwrapper{
+    width: 100%; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+/*main background color, padding, and border properties*/
+main{
+    background-color: #1f1d20; 
+    padding: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+/*Sets default font color for headings, labels, and paragraphs*/
+h1, h2, h3, p, label{
+    color: #ffffff;
+}
+
+/*footer background color, text-alignment, and padding*/
+footer{
+    text-align: center; 
+    padding-top: 2em;
+}
+
+/*color and font size for p elements in footer*/
+footer p{
+    color: #ffffff; 
+    font-size: 0.7em;
+}
+
+/*styles select and textarea as block and adds margin*/
+input, select{
+	display: block;
+	margin: 0 0 1em 1em;	
+}
+
+/*block display, margins, width, border radius and padding for textarea*/
+textarea{	
+	display: block;	
+	margin-left:auto;
+	margin-right:auto;
+	width: 90%;
+	padding: 1em 2em 1em 0.5em;
+}
+	
+/*padding and border radius for input elements*/
+input{
+	padding: 1em 2em 1em 0.5em;
+}
+
+/*applies margin and weight of font for labels and inputs*/
+label{
+	display: inline-block;
+	font-weight: bold;
+}
+
+/*styles background, color, and margins for form*/
+form{
+    background-color: #262527;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 1em;
+}
+
+/*adds margin and font weight to p element in form*/
+form p{
+	margin-left: 1em;
+	font-weight: bold;
+}
+
+/*Adds a hover color to buttons*/
+button:hover{
+    color: #ffffff;
+    background-color: #000000;
+}
+
+/*styles and floats search results in card viewing pages*/
+#results {
+    float: left;
+    max-width: 55%;
+    margin: 2em 0;
+}
+
+/*styles and floats collection in collection viewing pages*/
+#collection {
+    top: 0;
+    float: right;
+    position: sticky;
+    min-width: 40em;
+    width: 20%;
+    background-color: #151515;
+    padding: 2em;
+}
+
+/*hides card details*/
+.card-infobox {
+    display: none;
+}
+
+/*media query for tablet viewport targets screens with a min width of 669px*/
+@media only screen and (min-width: 669px) {
+    /*Resets the float for the footer*/
+    footer {		
+        clear: both;
+    }
+    
+    /*formats the navigation items to display in rows*/
+    nav li {
+        display: inline-block;
+        padding: 0.2em;
+    }
+
+    /*font size and alignment for nav*/
+    nav {
+        font-size: 1.25em; 
+        text-align: right;
+    }
+    
+    /*styling makes the nav links display multiple per row*/
+    nav li{
+        display:inline-block;
+        background-color: #000000;
+        border-radius: 0;
+    }
+	
+    /*pseudo-classes for nav link colors*/
+    nav li:hover{background-color: #2f3c42;}
+    
+    nav li a:link{color: #ffffff;}
+    
+    nav li a:hover{color: #72f766;}
+    
+    nav li a:visited{color: #644277;}
+    
+    /*sets the logo layout*/
+    header img {
+        margin-top: 3em; 
+        margin-left: 1em;
+        float: left;
+    }
+    
+    /*increases size for p element in header*/
+    header p{font-size: 1.75em;}
+	
+	/*display and margin for input and select elements*/
+	input, select{
+	display: inline-block;
+	margin: 0 0 1em 1em;	
+	}
+}
+
+/*media query for desktop viewport targets screens with a min width of 976px*/
+@media only screen and (min-width: 976px){
+    
+    /*changes max width to 80% of the screen(AS)*/
+    #outerwrapper{
+        width: 80%;
+    }
+    
+    /*header height, font size and text alignment*/
+    header{
+        font-size: 1.4em; 
+        text-align: center;
+    }
+    
+    /*remove float from the main content*/
+    main{
+        clear:both;
+        margin: 0 1em 0 1em;
+        padding: 1.05em;
+        border-radius: 0.5em;
+        border: 2px solid #ffffff;
+    }
+	
+    /*displays the images related to the items on infopages*/
+    article section figure{
+        float: right;
+        max-width: 25%;
+        margin: .5%;
+    }
+    
+    /*moves footer below floated content*/
+    footer{		
+		clear:both;
+	}
+
+	/*border radius for form*/
+	form{
+	    border-radius: 0.5em;
+	}
+}

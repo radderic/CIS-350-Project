@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>DraftSim | Edit Collection</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" href="images/mtglogo.png">
+    </head>
+
+    <body>
+        <div id="outerwrapper">
+            <header>
+                 <a href="index.html"><img src="images/logo.png" alt= "Magic the Gathering Logo"></a>
+                <p>Magic the Gathering Sealed and Draft Simulator</p>
+            </header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li><a href="viewcollection.html">View Collection</a>
+                    </li>
+                    <li><a href="draft.html">Start Draft</a>
+                    </li>
+                    <li><a href="sealed.html">Start Sealed</a>
+                    </li>
+                </ul>
+            </nav>
+            <main>
+                <h1>Edit Collection</h1>
+                <!--Holds the objects used to search for specific cards to add to the collection-->
+                <div id="searchbar">
+                    <form action="{{url_for('search', page=1)}}" method="get">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" id="name" value="{{request.args.get('name', '')}}">
+                        <label for="color">Color:</label>
+                        <select name="color" id="color">
+                            <option value="">Any</option>
+                            <option value="black">Black</option>
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                            <option value="red">Red</option>
+                            <option value="white">White</option>
+                        </select>
+                        <label for="set">Set:</label>
+                        <input list="sets" name="set" id="set" value="{{request.args.get('set', '')}}">
+                        <label for="type">Type:</label> 
+                        <select name="type" id="type">
+                            <option value="">Any</option>
+                            <option value="land">Land</option>
+                            <option value="creature">Creature</option>
+                            <option value="artifact">Artifact</option>
+                            <option value="enchantment">Enchantment</option>
+                            <option value="instant">Instant</option>
+                            <option value="sorcery">Sorcery</option>
+                        </select>
+                        <datalist id="sets">
+                            {% for set in set_names %}
+                                <option value="{{set}}">
+                            {% endfor %}
+                        </datalist>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <!--Displays results for the current query and allows the user to add them to their collection-->
+                <div id="results">
+                    <h2>Results</h2>
+                    <!--Creates prev/next page navigation buttons when appropriate-->
+                    {% if hasPrev %}
+                        <a class="page-control page-left" href="{{url_for('search', page=page-1,
+                            name=request.args.get('name'),
+                            color=request.args.get('color'),
+                            set=request.args.get('set'),
+                            type=request.args.get('type'))}}">< Prev Page</a>
+                    {% endif %}
+                    {% if hasNext %}
+                        <a class="page-control page-right" href="{{url_for('search', page=page+1,
+                            name=request.args.get('name'),
+                            color=request.args.get('color'),
+                            set=request.args.get('set'),
+                            type=request.args.get('type'))}}">Next Page ></a>
+                    {% endif %}
+                    <!--Displays the card results, adds them to the collection if their image is clicked-->
+                    <div id="cardcontainer">
+                        {% for card in cards %}
+                                <div class="card-infobox">
+                                    <h3>{{ card.name }}</h3>
+                                    <p>Text: {{ card.text }}</p>
+                                    <p>Set: {{ card.set_name }}</p>
+                                    <p>Types: {{ card.types }}</p>
+                                    <p>Id: {{ card.multiverse_id }}</p>
+                                </div>
+                                <button value="{{ card.multiverse_id }}" name="add_card" class="add-card"><img class="card-image" src="{{card.image_url}}" alt=card.name></button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--Displays a list of cards currently in the user's collection-->
+                <div id="collectionspoiler">
+                    <h2>Collection</h2>
+                    <p class="total-cards">Total Cards: <p>
+                    <button id="clear-deck" type="submit" value="clear" name="clear">Clear</button>
+                    <button id="simulate" onclick="location.href='/simulate'">Simulate draft</button>
+                </div>
+            </main>
+            <footer>
+                <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
+            </footer>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="{{url_for('static', filename='add_card.js')}}"></script>
+    </body>
+</html>
