@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="icon" href="images/mtglogo.png">
     </head>
-    
+
     <body>
         <div id="outerwrapper">
             <header>
@@ -67,20 +67,22 @@
                 <div id="results">
                     <h2>Results</h2>
                     <!--Creates prev/next page navigation buttons when appropriate-->
-                    {% if hasPrev %}
-                        <a class="page-control page-left" href="{{url_for('search', page=page-1,
-                            name=request.args.get('name'),
-                            color=request.args.get('color'),
-                            set=request.args.get('set'),
-                            type=request.args.get('type'))}}">< Prev Page</a>
-                    {% endif %}
-                    {% if hasNext %}
-                        <a class="page-control page-right" href="{{url_for('search', page=page+1,
-                            name=request.args.get('name'),
-                            color=request.args.get('color'),
-                            set=request.args.get('set'),
-                            type=request.args.get('type'))}}">Next Page ></a>
-                    {% endif %}
+                    <div id="pagelinks">
+                        {% if hasPrev %}
+                            <a class="page-control page-left" href="{{url_for('search', page=page-1,
+                                name=request.args.get('name'),
+                                color=request.args.get('color'),
+                                set=request.args.get('set'),
+                                type=request.args.get('type'))}}">< Prev Page</a>
+                        {% endif %}
+                        {% if hasNext %}
+                            <a class="page-control page-right" href="{{url_for('search', page=page+1,
+                                name=request.args.get('name'),
+                                color=request.args.get('color'),
+                                set=request.args.get('set'),
+                                type=request.args.get('type'))}}">Next Page ></a>
+                        {% endif %}
+                    </div>
                     <!--Displays the card results, adds them to the collection if their image is clicked-->
                     <div id="cardcontainer">
                         {% for card in cards %}
