@@ -59,10 +59,11 @@
                             <option value="">Any</option>
                             <option value="land">Land</option>
                             <option value="creature">Creature</option>
-                            <option value="artifact">Artifact</option>
-                            <option value="enchantment">Enchantment</option>
                             <option value="instant">Instant</option>
                             <option value="sorcery">Sorcery</option>
+                            <option value="enchantment">Enchantment</option>
+                            <option value="artifact">Artifact</option>
+                            <option value="planeswalker">Planeswalker</option>
                         </select>
                         <datalist id="sets">
                             {% for set in set_names %}
@@ -111,6 +112,7 @@
                     <div id="collectionspoiler">
                         <h2>Collection</h2>
                         <p class="total-cards">Total Cards: <p>
+                        <div id="draft-deck"></div>
                         <button id="clear-deck" type="submit" value="clear" name="clear">Clear</button>
                         <button id="simulate" onclick="location.href='/simulate'">Simulate draft</button>
                     </div>
