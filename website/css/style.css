@@ -157,6 +157,30 @@ button:hover{
     padding: 2em;
 }
 
+/*styles the result navigation buttons*/
+.page-control {
+    padding: .5rem 4rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: #000000;
+    font-weight: 900;
+}
+
+/*psuedoclass to create a button highlight for results navigation*/
+.page-control:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/*floats page navigators left and right*/
+.page-right {
+    float: right;
+}
+.page-left {
+    float: left;
+}
+
 /*hides card details*/
 .card-infobox {
     display: none;
