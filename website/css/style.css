@@ -173,7 +173,7 @@ button:hover{
     color: #ffffff;
 }
 
-/*floats page navigators left and right*/
+/*floats page navigators to the sides*/
 .page-right {
     float: right;
 }
@@ -184,6 +184,15 @@ button:hover{
 /*hides card details*/
 .card-infobox {
     display: none;
+}
+
+#draft-deck > p, #sealed-deck > p {
+    font-size: 2rem;
+}
+
+#draft-deck, #sealed-deck {
+    max-height: 100%;
+    overflow: auto;
 }
 
 /*media query for tablet viewport targets screens with a min width of 669px*/
