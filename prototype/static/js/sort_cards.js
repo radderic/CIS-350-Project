@@ -1,6 +1,7 @@
 //all cards
 var collection;
 var sealedresult;
+var deck;
 
 var commons = [];
 var uncommons = [];
@@ -30,14 +31,16 @@ function sortRarity(collection) {
         if(card !== 'count') {
             let count = collection[card].count
             for(var i = 0; i < count; i++) {
-                if(collection[card].rarity === 'Common')
+                if(collection[card].rarity === 'Common'){
                     commons.push(card);
-                else if(collection[card].rarity === 'Uncommon')
+                }else if(collection[card].rarity === 'Uncommon'){
                     uncommons.push(card);
-                else if(collection[card].rarity === 'Rare')
+                }else if(collection[card].rarity === 'Rare'){
                     rares.push(card);
-                else if(collection[card].rarity === 'Mythic')
+                }else if(collection[card].rarity === 'Mythic'){
                     mythics.push(card);
+                }
+                //else invalid rarity - add warning here in second release?
             }
         }
     }
@@ -69,31 +72,90 @@ function simulateSealed (commons, uncommons, rares, mythics) {
         for(var i = 0; i < numCommons; i++){
             //select an index
             var tempIndex = Math.floor(Math.random() * commons.length);
+            //add card to sealedresult
             sealedresult.push(commons[tempIndex]);
+            //remove card from rarity array to avoid double-drafting it
             commons.splice(tempIndex,1);
         }
         //select 18 random uncommons
         for(var i = 0; i < numUncommons; i++){
-            //select an index
             var tempIndex = Math.floor(Math.random() * uncommons.length);
             sealedresult.push(uncommons[tempIndex]);
             uncommons.splice(tempIndex,1);
         }
         //select up to 6 random rares
         for(var i = 0; i < numRares; i++){
-            //select an index
             var tempIndex = Math.floor(Math.random() * rares.length);
             sealedresult.push(rares[tempIndex]);
             rares.splice(tempIndex,1);
         }
         //select up to 6 random mythics
         for(var i = 0; i < numMythics; i++){
-            //select an index
             var tempIndex = Math.floor(Math.random() * mythics.length);
             sealedresult.push(mythics[tempIndex]);
             mythics.splice(tempIndex,1);
         }
     }else{
-        //TODO print warning
+        //TODO print warning to user
     }
+}
+
+$('.add-card').on('click', function(event) {
+    $.ajax({
+        data : {
+            add_card : $(this).val()
+        },
+        type : 'POST',
+        url: '/add'
+    })
+    .done(function(data) {
+        if(data.error) {
+            console.log(data.error)
+        }
+        else {
+            display_cards(data.success);
+        }
+    })
+    event.preventDefault();
+});
+
+$('#clear-deck').on('click', function(event) {
+    $.ajax({
+        data : {
+            clear : "clear"
+        },
+        type : 'POST',
+        url: '/clear'
+    })
+    .done(function(data) {
+        if(data.error) {
+            console.log(data.error)
+        }
+        else {
+            collection = JSON.parse(data.success);
+            $("#sealed-deck").text("");
+            let total = deck['count']
+            $(".total-cards").text(`Total cards: ${total}`);
+        }
+    })
+    event.preventDefault();
+});
+
+function display_cards(data) {
+    deck = JSON.parse(data)
+    let total = deck['count']
+    $("#sealed-deck").text("");
+    $(".total-cards").text(`Total cards: ${total}`);
+    for(card in deck) {
+        if(card !== 'count') {
+            let name = deck[card]['card_name']
+            let count = deck[card]['count']
+            $("#sealed-deck").append(`<div class="collection-card">
+                <p>${name} x ${count}</p>
+                <button value=${card} name="add_card" class="add-card">+</button>
+                <button value=${card} name="sub_card" class="sub-card">-</button>
+                </div>`);
+        }
+    }
+    reload_buttons();
 }

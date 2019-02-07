@@ -109,10 +109,10 @@
                     </div>
                     <!--TODO Update to display the cards they're adding to the sealed deck rather than cards in their collection-->
                     <!--Displays a list of cards currently in the user's sealed deck-->
-                    <div id="collectionspoiler">
-                        <h2>Collection</h2>
+                    <div id="deckspoiler">
+                        <h2>Deck</h2>
                         <p class="total-cards">Total Cards: <p>
-                        <div id="draft-deck"></div>
+                        <div id="sealed-deck"></div>
                         <button id="clear-deck" type="submit" value="clear" name="clear">Clear</button>
                         <button id="simulate" onclick="location.href='/simulate'">Simulate draft</button>
                     </div>
@@ -121,6 +121,6 @@
                 <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
             </footer>
         </div>
+        <script src="{{url_for('static', filename='js/sort_cards.js')}}"></script>
     </body>
-
 </html>
