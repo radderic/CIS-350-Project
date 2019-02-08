@@ -17,7 +17,7 @@ $.ajax({
 })
 .done(function(data) {
     if(data.error) {
-        console.log(data.error)
+        console.log(data.error);
     }
     else {
         collection = JSON.parse(data.success);
@@ -27,9 +27,9 @@ $.ajax({
 
 
 function sortRarity(collection) {
-    for(card in collection) {
+    for(var card in collection) {
         if(card !== 'count') {
-            let count = collection[card].count
+            let count = collection[card].count;
             for(var i = 0; i < count; i++) {
                 if(collection[card].rarity === 'Common'){
                     commons.push(card);
@@ -48,18 +48,18 @@ function sortRarity(collection) {
 
 function simulateSealed (commons, uncommons, rares, mythics) {
     //numbers of each rarity opened in a sealed draft - rares and mythics subject to change
-    var numCommons = 60
-    var numUncommons = 18
-    var numRares = 6
+    var numCommons = 60;
+    var numUncommons = 18;
+    var numRares = 6;
     var numMythics = 0;
 
     //numMythics compared against "magic number" 6 because it's the max possible mythics
-    if(commons.length >= numCommons && uncommons.length >= numUncommons 
-        && rares.length >= numRares && mythics.length >= 6 ){
+    if(commons.length >= numCommons && uncommons.length >= numUncommons &&
+        rares.length >= numRares && mythics.length >= 6 ){
         //determine how many rares will become mythics for the draft
         for(var i=0; i < 6; i++){
             //random number from 0 to 999
-            var mythic = Math.floor(Math.random() * 1000)
+            var mythic = Math.floor(Math.random() * 1000);
             //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
             if (mythic <= 124){
                 numMythics++;
@@ -110,7 +110,7 @@ $('.add-card').on('click', function(event) {
     })
     .done(function(data) {
         if(data.error) {
-            console.log(data.error)
+            console.log(data.error);
         }
         else {
             display_cards(data.success);
@@ -129,27 +129,27 @@ $('#clear-deck').on('click', function(event) {
     })
     .done(function(data) {
         if(data.error) {
-            console.log(data.error)
+            console.log(data.error);
         }
         else {
             collection = JSON.parse(data.success);
             $("#sealed-deck").text("");
-            let total = deck['count']
+            let total = deck['count'];
             $(".total-cards").text(`Total cards: ${total}`);
         }
-    })
+    });
     event.preventDefault();
 });
 
 function display_cards(data) {
-    deck = JSON.parse(data)
-    let total = deck['count']
+    deck = JSON.parse(data);
+    let total = deck['count'];
     $("#sealed-deck").text("");
     $(".total-cards").text(`Total cards: ${total}`);
-    for(card in deck) {
+    for(var card in deck) {
         if(card !== 'count') {
-            let name = deck[card]['card_name']
-            let count = deck[card]['count']
+            let name = deck[card]['card_name'];
+            let count = deck[card]['count'];
             $("#sealed-deck").append(`<div class="collection-card">
                 <p>${name} x ${count}</p>
                 <button value=${card} name="add_card" class="add-card">+</button>
