@@ -61,18 +61,24 @@
                 {% endif %}
                 </div>
                 <div class="cards-container">
-                {% for card in cards %}
-                    <div class="card">
-                        <div class="card-infobox">
-                            <h3>{{ card.name }}</h3>
-                            <p>Text: {{ card.text }}</p>
-                            <p>Set: {{ card.set_name }}</p>
-                            <p>Types: {{ card.types }}</p>
-                            <p>Id: {{ card.multiverse_id }}</p>
+                {% if cards %}
+                    {% for card in cards %}
+                        <div class="card">
+                            <div class="card-infobox">
+                                <h3>{{ card.name }}</h3>
+                                <p>Text: {{ card.text }}</p>
+                                <p>Set: {{ card.set_name }}</p>
+                                <p>Types: {{ card.types }}</p>
+                                <p>Id: {{ card.multiverse_id }}</p>
+                            </div>
+                            <button value="{{ card.multiverse_id }}" name="add_card" class="add-card"><img class="card-image" src="{{card.image_url}}"></button>
                         </div>
-                        <button value="{{ card.multiverse_id }}" name="add_card" class="add-card"><img class="card-image" src="{{card.image_url}}"></button>
+                    {% endfor %}
+                {% else %}
+                    <div>
+                        <p>No search results!</p>
                     </div>
-                {% endfor %}
+                {% endif %}
                 </div>
             </div>
             <div class="collection">

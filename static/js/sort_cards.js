@@ -1,7 +1,7 @@
 //all cards
 var collection;
-var sealedresult;
-var deck;
+var sealedresult = [];
+var deck = [];
 
 var commons = [];
 var uncommons = [];
@@ -22,6 +22,8 @@ $.ajax({
     else {
         collection = JSON.parse(data.success);
         sortRarity(collection);
+        simulateSealed(commons, uncommons, rares, mythics);
+        display_cards();
     }
 });
 
@@ -46,6 +48,7 @@ function sortRarity(collection) {
     }
 }
 
+
 function simulateSealed (commons, uncommons, rares, mythics) {
     //numbers of each rarity opened in a sealed draft - rares and mythics subject to change
     var numCommons = 60;
@@ -55,22 +58,10 @@ function simulateSealed (commons, uncommons, rares, mythics) {
 
     //numMythics compared against "magic number" 6 because it's the max possible mythics
     if(commons.length >= numCommons && uncommons.length >= numUncommons &&
-        rares.length >= numRares && mythics.length >= 6 ){
+        rares.length >= numRares || mythics.length >= 6 ){
 
         //reset sealedresult in case an existing sealed is stored
-        sealedresult.clear();
-
-        //determine how many rares will become mythics for the draft
-        for(let i=0; i < 6; i++){
-            //random number from 0 to 999
-            let mythic = Math.floor(Math.random() * 1000);
-            //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
-            if (mythic <= 124){
-                numMythics++;
-            }
-        }
-        //replace rares with mythics if any were generated
-        numRares -= numMythics;
+        //sealedresult.clear();
 
         //select 60 random commons
         for(let i = 0; i < numCommons; i++){
@@ -89,38 +80,35 @@ function simulateSealed (commons, uncommons, rares, mythics) {
         }
         //select up to 6 random rares
         for(let i = 0; i < numRares; i++){
+
+            //check for a random chance to upgrade otherwise it remains a rare
+            if(mythics.length > 0) {
+                let mythic = Math.floor(Math.random() * 1000);
+                //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
+                if (mythic <= 124){
+                    console.log("mythic added");
+                    let tempIndex = Math.floor(Math.random() * mythics.length);
+                    sealedresult.push(mythics[tempIndex]);
+                    mythics.splice(tempIndex,1);
+                }
+            }
             let tempIndex = Math.floor(Math.random() * rares.length);
             sealedresult.push(rares[tempIndex]);
             rares.splice(tempIndex,1);
         }
-        //select up to 6 random mythics
-        for(let i = 0; i < numMythics; i++){
-            let tempIndex = Math.floor(Math.random() * mythics.length);
-            sealedresult.push(mythics[tempIndex]);
-            mythics.splice(tempIndex,1);
-        }
+
     }else{
         //TODO print warning to user
     }
 }
 
-btnSimSealed.onclick = function(){simulateSealed(commons, uncommons, rares, mythics);};
-
-function display_cards(data) {
-    deck = JSON.parse(data);
-    let total = deck['count'];
-    $("#sealed-deck").text("");
-    $(".total-cards").text(`Total cards: ${total}`);
-    for(var card in deck) {
-        if(card !== 'count') {
-            let name = deck[card]['card_name'];
-            let count = deck[card]['count'];
-            $("#sealed-deck").append(`<div class="collection-card">
-                <p>${name} x ${count}</p>
-                <button value=${card} name="add_card" class="add-card">+</button>
-                <button value=${card} name="sub_card" class="sub-card">-</button>
-                </div>`);
-        }
+function display_cards() {
+    $("#sealed-results").text("");
+    for(var index in sealedresult) {
+        let card_id = sealedresult[index]
+        let name = collection[card_id]['card_name'];
+        $("#sealed-results").append(`<div class="collection-card" id="${card_id}">
+                <p>${name}</p>
+            </div>`);
     }
-    reload_buttons();
 }

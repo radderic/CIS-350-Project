@@ -12,7 +12,7 @@
     <body>
         <div id="outerwrapper">
             <header>
-                 <a href="index.html"><img src="images/logo.jpg" alt= "Magic the Gathering Logo"></a>
+                <a href="index.html"><img src="{{url_for('static', filename='images/logo.png')}}" alt= "Magic the Gathering Logo"></a>
                 <p>Magic the Gathering Sealed and Draft Simulator</p>
             </header>
             <nav>
@@ -23,32 +23,23 @@
                     <!--<li><a href="draft.html">Start Draft</a></li>-->
                 </ul>
             </nav>
-            <div id="main">
-                <p id="collectionwarning">Your collection must have at least: 60 commons, 18 uncommons, 6 rares, and 6 mythics.</p>
-                <div id="toolbar">
-                    <button type="button" id="btnSimSealed">Simulate Sealed</button>
-                    <button type="button" id="btnDeleteSealed">Delete Sealed</button>
-                </div>
-                <!--Displays results of the sealed simulation and allows the user to add them to their sealed deck-->
-                <div id="results">
-                    <h2>Results</h2>
-                    <!--Displays the card results, adds them to the sealed deck if their image is clicked-->
-                    <div id="cardcontainer">
+            <main class="sealed-split">
+                <div class="results-container">
+                    <h2>Simulation Results</h2>
+                    <div id="sealed-results">
                     </div>
                 </div>
-                <!--Displays a list of cards currently in the user's sealed deck-->
-                <div id="deckspoiler">
-                    <h2>Deck</h2>
-                    <p class="total-cards">Total Cards: <p>
-                    <div id="sealed-deck"></div>
-                    <button id="clear-deck" type="submit" value="clear" name="clear">Clear</button>
-                    <button id="simulate" onclick="location.href='/simulate'">Simulate draft</button>
+                <div id="sealed-picks">
+                    <h2>Draft Deck</h2>
+                    <div id="sealed-results">
+                    </div>
                 </div>
-            </div>
+            </main>
             <footer>
                 <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
             </footer>
         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="{{url_for('static', filename='js/sort_cards.js')}}"></script>
     </body>
 </html>

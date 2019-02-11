@@ -186,6 +186,10 @@ button:hover{
     display: none;
 }
 
+.sealed-split {
+    display: flex;
+}
+
 #draft-deck > p, #sealed-deck > p {
     font-size: 2rem;
 }
@@ -193,6 +197,14 @@ button:hover{
 #draft-deck, #sealed-deck {
     max-height: 100%;
     overflow: auto;
+}
+
+#sealed-results {
+    flex-basis: 50%;
+}
+
+#sealed-picks {
+    flex-basis: 50%;
 }
 
 /*media query for tablet viewport targets screens with a min width of 669px*/
