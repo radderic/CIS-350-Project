@@ -5,7 +5,7 @@
         <title>MtG DraftSim | Sealed</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
         <link rel="icon" href="images/favicon.png">
     </head>
 
@@ -17,8 +17,8 @@
             </header>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="editcollection.html">Edit Collection</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{{url_for('search', page=1)}}">Edit Collection</a></li>
                     <!--<li><a href="viewcollection.html">View Collection</a></li>-->
                     <!--<li><a href="draft.html">Start Draft</a></li>-->
                 </ul>

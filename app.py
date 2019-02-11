@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from mtgsdk import Card, Set
-from magic_card import MagicCard
+from utils.magic_card import MagicCard
 from json import dumps
 
 app = Flask(__name__)
@@ -59,11 +59,12 @@ def search(page):
     if(len(nextPageCards) > 0):
         hasNext = True
 
-    return render_template('base.html', set_names=set_names, cards=cards, hasNext=hasNext, hasPrev=hasPrev, page=page)
+    return render_template('editcollection.html', set_names=set_names, cards=cards, hasNext=hasNext, hasPrev=hasPrev, page=page)
 
 @app.route('/')
 def index():
-    return redirect(url_for('search', page=1), code=302)
+    return render_template('index.html')
+    #return redirect(url_for('search', page=1), code=302)
 
 @app.route('/add', methods=['POST'])
 def add_card():
@@ -127,9 +128,9 @@ def clear():
     session.modified = True
     return jsonify({'success' : dumps(session['draft_deck'])})
 
-@app.route('/simulate')
-def simulate():
-    return render_template('simulate.html')
+@app.route('/sealed')
+def sealed():
+    return render_template('sealed.html')
 
 @app.route('/invalid')
 def not_found():

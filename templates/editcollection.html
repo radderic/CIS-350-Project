@@ -30,8 +30,8 @@
                                 <option value="creature">Creature</option>
                                 <option value="artifact">Artifact</option>
                                 <option value="enchantment">Enchantment</option>
-                                <option value="instant">instant</option>
-                                <option value="sorcery">sorcery</option>
+                                <option value="instant">Instant</option>
+                                <option value="sorcery">Sorcery</option>
                             </select></p>
                     <datalist id="sets">
                     {% for set in set_names %}
@@ -82,7 +82,7 @@
                 </div>
                 <div id="draft-deck"></div>
                 <button id="clear-deck" type="submit" value="clear" name="clear">Clear</button>
-                <button id="simulate" onclick="location.href='/simulate'">Simulate draft</button>
+                <button id="simulate" onclick="location.href='/sealed'">Simulate draft</button>
             </div>
         </div>
     </main>

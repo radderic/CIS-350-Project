@@ -56,10 +56,10 @@ function simulateSealed (commons, uncommons, rares, mythics) {
     //numMythics compared against "magic number" 6 because it's the max possible mythics
     if(commons.length >= numCommons && uncommons.length >= numUncommons &&
         rares.length >= numRares && mythics.length >= 6 ){
-        
+
         //reset sealedresult in case an existing sealed is stored
         sealedresult.clear();
-        
+
         //determine how many rares will become mythics for the draft
         for(let i=0; i < 6; i++){
             //random number from 0 to 999
@@ -71,7 +71,7 @@ function simulateSealed (commons, uncommons, rares, mythics) {
         }
         //replace rares with mythics if any were generated
         numRares -= numMythics;
-        
+
         //select 60 random commons
         for(let i = 0; i < numCommons; i++){
             //select an index
