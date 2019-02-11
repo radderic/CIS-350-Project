@@ -88,7 +88,7 @@ function simulateSealed (commons, uncommons, rares, mythics) {
                     mythics.splice(tempIndex,1);
                 }
             }
-            if(rares.lengnth > 0) {
+            if(rares.length > 0) {
                 let tempIndex = Math.floor(Math.random() * rares.length);
                 sealedresult.push(rares[tempIndex]);
                 rares.splice(tempIndex,1);
