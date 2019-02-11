@@ -54,14 +54,10 @@ function simulateSealed (commons, uncommons, rares, mythics) {
     var numCommons = 60;
     var numUncommons = 18;
     var numRares = 6;
-    var numMythics = 0;
 
     //numMythics compared against "magic number" 6 because it's the max possible mythics
     if(commons.length >= numCommons && uncommons.length >= numUncommons &&
-        rares.length >= numRares || mythics.length >= 6 ){
-
-        //reset sealedresult in case an existing sealed is stored
-        //sealedresult.clear();
+        (rares.length + mythics.length) >= numRares){
 
         //select 60 random commons
         for(let i = 0; i < numCommons; i++){
@@ -92,9 +88,17 @@ function simulateSealed (commons, uncommons, rares, mythics) {
                     mythics.splice(tempIndex,1);
                 }
             }
-            let tempIndex = Math.floor(Math.random() * rares.length);
-            sealedresult.push(rares[tempIndex]);
-            rares.splice(tempIndex,1);
+            if(rares.lengnth > 0) {
+                let tempIndex = Math.floor(Math.random() * rares.length);
+                sealedresult.push(rares[tempIndex]);
+                rares.splice(tempIndex,1);
+            }
+            // we must have run out of rares, use mythics
+            else {
+                let tempIndex = Math.floor(Math.random() * mythics.length);
+                sealedresult.push(mythics[tempIndex]);
+                mythics.splice(tempIndex,1);
+            }
         }
 
     }else{
