@@ -1,6 +1,12 @@
 /*web based font*/
 @import url('https://fonts.googleapis.com/css?family=Hammersmith+One');
 
+* {
+    /*margin: 0;*/
+    /*padding: 0;*/
+    box-sizing: border-box;
+}
+
 /*background styles and text alignment for header*/
 header{
     background: #000000;
@@ -188,6 +194,7 @@ button:hover{
 
 .sealed-split {
     display: flex;
+    justify-content: flex-start;
 }
 
 #draft-deck > p, #sealed-deck > p {
@@ -199,12 +206,9 @@ button:hover{
     overflow: auto;
 }
 
-#sealed-results {
-    flex-basis: 50%;
-}
-
-#sealed-picks {
-    flex-basis: 50%;
+.results-container {
+    width: 50%;
+    border-right: 2px solid white;
 }
 
 /*media query for tablet viewport targets screens with a min width of 669px*/

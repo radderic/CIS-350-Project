@@ -12,13 +12,13 @@
     <body>
         <div id="outerwrapper">
             <header>
-                <a href="index.html"><img src="{{url_for('static', filename='images/logo.png')}}" alt= "Magic the Gathering Logo"></a>
+                <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='images/logo.png')}}" alt= "Magic the Gathering Logo"></a>
                 <p>Magic the Gathering Sealed and Draft Simulator</p>
             </header>
             <nav>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="{{url_for('search', page=1)}}">Edit Collection</a></li>
+                    <li><a href="{{url_for('search', page=1)}}">Build Card Pool</a></li>
                     <!--<li><a href="viewcollection.html">View Collection</a></li>-->
                     <!--<li><a href="draft.html">Start Draft</a></li>-->
                 </ul>
@@ -29,9 +29,11 @@
                     <div id="sealed-results">
                     </div>
                 </div>
-                <div id="sealed-picks">
-                    <h2>Draft Deck</h2>
-                    <div id="sealed-results">
+                <div class="picks-container">
+                    <div id="sealed-picks">
+                        <h2>Draft Deck</h2>
+                        <div id="sealed-results">
+                        </div>
                     </div>
                 </div>
             </main>
