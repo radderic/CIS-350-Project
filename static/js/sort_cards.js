@@ -96,27 +96,56 @@ function simulateSealed (commons, uncommons, rares, mythics) {
                 mythics.splice(tempIndex,1);
             }
         }
-        sealedresult.sort();
     }else{
         //TODO print warning to user
     }
 }
 
 function display_cards() {
+    //clear current display
     $("#sealed-results").text("");
+    $("#sealed-picks").text("");
+    //resort lists
+    sealedresult.sort();
+    deck.sort();
+    //display each element in sealedresult
     for(var index in sealedresult) {
         let card_id = sealedresult[index];
         let card_img = collection[card_id]['image_url'];
         let name = collection[card_id]['card_name'];
         $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
-                <input type="image" id="cardbtn" src=${card_img} alt=${name}>
+                <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
+            </div>`);
+    }
+    //display each card in deck
+    for(var index in deck){
+        let card_id = deck[index];
+        let card_img = collection[card_id]['image_url'];
+        let name = collection[card_id]['card_name'];
+        $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
+                <p onclick="sort_cards:remove_card(${card_id})">${name}</p>
             </div>`);
     }
 }
 
-function resimulate() {
-    sealedresult = [];
-    deck = [];
-    simulateSealed(commons, uncommons, rares, myhtics);
+function add_to_deck(card_id){
+    for(var index in sealedresult){
+        if(sealedresult[index] == card_id){
+            deck.push(card_id);
+            sealedresult.splice(index,1);
+            break;
+        }
+    }
+    display_cards();
+}
+
+function remove_card(card_id){
+    for(var index in deck){
+        if(deck[index] == card_id){
+            sealedresult.push(card_id);
+            deck.splice(index,1);
+            break;
+        }
+    }
     display_cards();
 }

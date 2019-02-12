@@ -202,21 +202,51 @@ button:hover{
 }
 
 #draft-deck, #sealed-deck {
-    max-height: 100%;
     overflow: auto;
 }
 
 .results-container {
-    width: 50%;
+    overflow-y: scroll;
+    max-height: 800px;
+    width: 70%;
+    margin-right: .2em;
     border-right: 2px solid white;
 }
 
 /*Styles the card images for sealed to be buttons*/
 .sealed-card {
-    display: flex;
-    flex-wrap: wrap;
+    padding: 0.5em;
+    display: inline-flex;
     clear: both;
     justify-content: space-around;
+}
+
+/*Styles the container holding the deck for Sealed format*/
+.picks-container {
+    overflow-y: scroll;
+    max-height: 800px;
+    width: 29%;
+    margin-right: .2em;
+    border-right: 2px solid white;
+}
+
+/*background color for deck-card doesn't seem to be working - TODO Fix*/
+/*Styles the cards in the deck for Sealed format*/
+.deck-card {
+    background-color: #1f1d20;
+}
+.deck-card:hover {
+    background-color: #3a333d;
+}
+.deck-card p{
+    border: 2px;
+    border-style: solid;
+    border-color: #ffffff;
+    border-radius: .5em;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: .2em;
+    padding: .2em;
 }
 
 /*media query for tablet viewport targets screens with a min width of 669px*/
@@ -274,9 +304,9 @@ button:hover{
 /*media query for desktop viewport targets screens with a min width of 976px*/
 @media only screen and (min-width: 976px){
     
-    /*changes max width to 80% of the screen(AS)*/
+    /*changes max width to 90% of the screen*/
     #outerwrapper{
-        width: 80%;
+        width: 90%;
     }
     
     /*header height, font size and text alignment*/
