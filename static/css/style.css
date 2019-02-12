@@ -211,6 +211,14 @@ button:hover{
     border-right: 2px solid white;
 }
 
+/*Styles the card images for sealed to be buttons*/
+.sealed-card {
+    display: flex;
+    flex-wrap: wrap;
+    clear: both;
+    justify-content: space-around;
+}
+
 /*media query for tablet viewport targets screens with a min width of 669px*/
 @media only screen and (min-width: 669px) {
     /*Resets the float for the footer*/

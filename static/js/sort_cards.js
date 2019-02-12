@@ -27,7 +27,6 @@ $.ajax({
     }
 });
 
-
 function sortRarity(collection) {
     for(var card in collection) {
         if(card !== 'count') {
@@ -47,7 +46,6 @@ function sortRarity(collection) {
         }
     }
 }
-
 
 function simulateSealed (commons, uncommons, rares, mythics) {
     //numbers of each rarity opened in a sealed draft - rares and mythics subject to change
@@ -74,9 +72,8 @@ function simulateSealed (commons, uncommons, rares, mythics) {
             sealedresult.push(uncommons[tempIndex]);
             uncommons.splice(tempIndex,1);
         }
-        //select up to 6 random rares
+        //select up to 6 random rares, with a 12.5% chance on each to be replaced by a mythic
         for(let i = 0; i < numRares; i++){
-
             //check for a random chance to upgrade otherwise it remains a rare
             let mythic = Math.floor(Math.random() * 1000);
             //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
@@ -93,13 +90,13 @@ function simulateSealed (commons, uncommons, rares, mythics) {
                 rares.splice(tempIndex,1);
             }
             // we must have run out of rares, use mythics
-            else {
+            else{
                 let tempIndex = Math.floor(Math.random() * mythics.length);
                 sealedresult.push(mythics[tempIndex]);
                 mythics.splice(tempIndex,1);
             }
         }
-
+        sealedresult.sort();
     }else{
         //TODO print warning to user
     }
@@ -108,10 +105,18 @@ function simulateSealed (commons, uncommons, rares, mythics) {
 function display_cards() {
     $("#sealed-results").text("");
     for(var index in sealedresult) {
-        let card_id = sealedresult[index]
+        let card_id = sealedresult[index];
+        let card_img = collection[card_id]['image_url'];
         let name = collection[card_id]['card_name'];
-        $("#sealed-results").append(`<div class="collection-card" id="${card_id}">
-                <p>${name}</p>
+        $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
+                <input type="image" id="cardbtn" src=${card_img} alt=${name}>
             </div>`);
     }
+}
+
+function resimulate() {
+    sealedresult = [];
+    deck = [];
+    simulateSealed(commons, uncommons, rares, myhtics);
+    display_cards();
 }
