@@ -78,17 +78,16 @@ function simulateSealed (commons, uncommons, rares, mythics) {
         for(let i = 0; i < numRares; i++){
 
             //check for a random chance to upgrade otherwise it remains a rare
-            if(mythics.length > 0) {
-                let mythic = Math.floor(Math.random() * 1000);
-                //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
-                if (mythic <= 124){
-                    console.log("mythic added");
+            let mythic = Math.floor(Math.random() * 1000);
+            //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
+            if (mythic <= 124){
+                if(mythics.length > 0) {
                     let tempIndex = Math.floor(Math.random() * mythics.length);
                     sealedresult.push(mythics[tempIndex]);
                     mythics.splice(tempIndex,1);
                 }
             }
-            if(rares.length > 0) {
+            else if(rares.length > 0) {
                 let tempIndex = Math.floor(Math.random() * rares.length);
                 sealedresult.push(rares[tempIndex]);
                 rares.splice(tempIndex,1);
