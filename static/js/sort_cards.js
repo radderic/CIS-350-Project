@@ -1,7 +1,7 @@
 //all cards
 var collection;
 var sealedresult = [];
-var deck = [];
+var deck = {};
 
 var commons = [];
 var uncommons = [];
@@ -105,9 +105,8 @@ function display_cards() {
     //clear current display
     $("#sealed-results").text("");
     $("#sealed-picks").text("");
-    //resort lists
+    //re-sort lists
     sealedresult.sort();
-    deck.sort();
     //display each element in sealedresult
     for(var index in sealedresult) {
         let card_id = sealedresult[index];
@@ -118,20 +117,30 @@ function display_cards() {
             </div>`);
     }
     //display each card in deck
-    for(var index in deck){
-        let card_id = deck[index];
+    for(var key in deck){
+        let card_id = key;
+        let count = deck[key];
         let card_img = collection[card_id]['image_url'];
         let name = collection[card_id]['card_name'];
         $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
-                <p onclick="sort_cards:remove_card(${card_id})">${name}</p>
+                <p onclick="sort_cards:remove_card(${card_id})">${count}x ${name} </p>
             </div>`);
     }
 }
 
 function add_to_deck(card_id){
+    //if card is already in deck, increase its count
+    if(card_id in deck){
+        deck[card_id] += 1;
+    }
+    /*else, add it as a new keyval pair where the key is the ID 
+    and the value is the count (starting at one)*/
+    else{
+        deck[card_id] = 1;
+    }
+    //remove the card from sealedresult
     for(var index in sealedresult){
         if(sealedresult[index] == card_id){
-            deck.push(card_id);
             sealedresult.splice(index,1);
             break;
         }
@@ -140,12 +149,15 @@ function add_to_deck(card_id){
 }
 
 function remove_card(card_id){
-    for(var index in deck){
-        if(deck[index] == card_id){
-            sealedresult.push(card_id);
-            deck.splice(index,1);
-            break;
-        }
+    let count = deck[card_id];
+    sealedresult.push(card_id);
+    //Remove from deck if one or less (meaning 0 after the card is removed)
+    if(count <= 1){
+        delete deck[card_id];
+    } 
+    //else decrement count by one
+    else {
+        deck[card_id] = count - 1;
     }
     display_cards();
 }
