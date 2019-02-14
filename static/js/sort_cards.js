@@ -22,8 +22,7 @@ $.ajax({
     else {
         collection = JSON.parse(data.success);
         sortRarity(collection);
-        simulateSealed(commons, uncommons, rares, mythics);
-        display_cards();
+        addButtons();
     }
 });
 
@@ -47,30 +46,45 @@ function sortRarity(collection) {
     }
 }
 
-function simulateSealed (commons, uncommons, rares, mythics) {
+function addButtons(){
+    $(".controls").append(`
+    <button onclick="sort_cards:simulateSealed()">Simulate Sealed</button>
+    <button  onclick="sort_cards:clearDeck()">Clear Deck</button>
+    `);
+}
+
+function simulateSealed () {
     //numbers of each rarity opened in a sealed draft - rares and mythics subject to change
     var numCommons = 60;
     var numUncommons = 18;
     var numRares = 6;
+    //workaround for javascript not supporting pass by val for arrays
+    var tempCommons = commons.slice();
+    var tempUncommons = uncommons.slice();
+    var tempRares = rares.slice();
+    var tempMythics = mythics.slice();
+    //clear existing deck/sealeresults if any
+    sealedresult = [];
+    deck = {};
 
     //numMythics compared against "magic number" 6 because it's the max possible mythics
-    if(commons.length >= numCommons && uncommons.length >= numUncommons &&
+    if(tempCommons.length >= numCommons && uncommons.length >= numUncommons &&
         (rares.length + mythics.length) >= numRares){
 
         //select 60 random commons
         for(let i = 0; i < numCommons; i++){
             //select an index
-            let tempIndex = Math.floor(Math.random() * commons.length);
+            let tempIndex = Math.floor(Math.random() * tempCommons.length);
             //add card to sealedresult
-            sealedresult.push(commons[tempIndex]);
+            sealedresult.push(tempCommons[tempIndex]);
             //remove card from rarity array to avoid double-drafting it
-            commons.splice(tempIndex,1);
+            tempCommons.splice(tempIndex,1);
         }
         //select 18 random uncommons
         for(let i = 0; i < numUncommons; i++){
-            let tempIndex = Math.floor(Math.random() * uncommons.length);
-            sealedresult.push(uncommons[tempIndex]);
-            uncommons.splice(tempIndex,1);
+            let tempIndex = Math.floor(Math.random() * tempUncommons.length);
+            sealedresult.push(tempUncommons[tempIndex]);
+            tempUncommons.splice(tempIndex,1);
         }
         //select up to 6 random rares, with a 12.5% chance on each to be replaced by a mythic
         for(let i = 0; i < numRares; i++){
@@ -78,27 +92,27 @@ function simulateSealed (commons, uncommons, rares, mythics) {
             let mythic = Math.floor(Math.random() * 1000);
             //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
             if (mythic <= 124){
-                if(mythics.length > 0) {
-                    let tempIndex = Math.floor(Math.random() * mythics.length);
-                    sealedresult.push(mythics[tempIndex]);
-                    mythics.splice(tempIndex,1);
+                if(tempMythics.length > 0) {
+                    let tempIndex = Math.floor(Math.random() * tempMythics.length);
+                    sealedresult.push(tempMythics[tempIndex]);
+                    tempMythics.splice(tempIndex,1);
                 }
             }
-            else if(rares.length > 0) {
-                let tempIndex = Math.floor(Math.random() * rares.length);
+            else if(tempRares.length > 0) {
+                let tempIndex = Math.floor(Math.random() * tempRares.length);
                 sealedresult.push(rares[tempIndex]);
-                rares.splice(tempIndex,1);
+                tempRares.splice(tempIndex,1);
             }
             // we must have run out of rares, use mythics
             else{
-                let tempIndex = Math.floor(Math.random() * mythics.length);
-                sealedresult.push(mythics[tempIndex]);
-                mythics.splice(tempIndex,1);
+                let tempIndex = Math.floor(Math.random() * tempMythics.length);
+                sealedresult.push(tempMythics[tempIndex]);
+                tempMythics.splice(tempIndex,1);
             }
         }
-    }else{
-        //TODO print warning to user
+        display_cards();
     }
+    //else colllection needs more cards TODO print warning to user
 }
 
 function display_cards() {
@@ -123,7 +137,7 @@ function display_cards() {
         let card_img = collection[card_id]['image_url'];
         let name = collection[card_id]['card_name'];
         $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
-                <p onclick="sort_cards:remove_card(${card_id})">${count}x ${name} </p>
+                <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
             </div>`);
     }
 }
@@ -148,7 +162,7 @@ function add_to_deck(card_id){
     display_cards();
 }
 
-function remove_card(card_id){
+function remove_from_deck(card_id){
     let count = deck[card_id];
     sealedresult.push(card_id);
     //Remove from deck if one or less (meaning 0 after the card is removed)
@@ -158,6 +172,17 @@ function remove_card(card_id){
     //else decrement count by one
     else {
         deck[card_id] = count - 1;
+    }
+    display_cards();
+}
+
+function clearDeck(){
+    for(var card_id in deck){
+        let count = deck[card_id];
+        for(let i = 0; i < count; i++){
+            sealedresult.push(card_id);
+        }
+        delete deck[card_id];
     }
     display_cards();
 }
