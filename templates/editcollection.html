@@ -1,7 +1,9 @@
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Draft Simulator Prototype</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/base.css')}}">
 </head>
 
@@ -15,8 +17,8 @@
             <form action="{{url_for('search', page=1)}}" method="get">
                 <div class="search-options">
                     <p>Name: <input type="text" name="name" value="{{request.args.get('name', '')}}"></p>
-                    <p>Color: <select name="color" value="">
-                                <option value="">Any</option>
+                    <p>Color: <select name="color">
+                                <option value="" selected>Any</option>
                                 <option value="black">Black</option>
                                 <option value="blue">Blue</option>
                                 <option value="green">Green</option>
@@ -24,12 +26,13 @@
                                 <option value="white">White</option>
                             </select></p>
                     <p>Set: <input list="sets" name="set" value="{{request.args.get('set', '')}}">
-                    <p>Type: <select name="type" value="">
-                                <option value="">Any</option>
+                    <p>Type: <select name="type">
+                                <option value="" selected>Any</option>
                                 <option value="land">Land</option>
                                 <option value="creature">Creature</option>
                                 <option value="artifact">Artifact</option>
                                 <option value="enchantment">Enchantment</option>
+                                <option value="planeswalker">Planeswalker</option>
                                 <option value="instant">Instant</option>
                                 <option value="sorcery">Sorcery</option>
                             </select></p>
@@ -37,7 +40,7 @@
                     {% for set in set_names %}
                         <option value="{{set}}">
                     {% endfor %}
-                    </datalist></p>
+                    </datalist>
                 </div>
                 <button class="search-btn" type="submit">search</button>
             </form>
@@ -50,14 +53,14 @@
                         name=request.args.get('name'),
                         color=request.args.get('color'),
                         set=request.args.get('set'),
-                        type=request.args.get('type'))}}">< Prev Page</a>
+                        type=request.args.get('type'))}}">&lt; Prev Page</a>
                 {% endif %}
                 {% if hasNext %}
                     <a class="page-control page-right" href="{{url_for('search', page=page+1,
                         name=request.args.get('name'),
                         color=request.args.get('color'),
                         set=request.args.get('set'),
-                        type=request.args.get('type'))}}">Next Page ></a>
+                        type=request.args.get('type'))}}">Next Page &gt;</a>
                 {% endif %}
                 </div>
                 <div class="cards-container">
@@ -71,7 +74,7 @@
                                 <p>Types: {{ card.types }}</p>
                                 <p>Id: {{ card.multiverse_id }}</p>
                             </div>
-                            <button value="{{ card.multiverse_id }}" name="add_card" class="add-card"><img class="card-image" src="{{card.image_url}}"></button>
+                            <button value="{{ card.multiverse_id }}" name="add_card" class="add-card"><img class="card-image" src="{{card.image_url}}" alt="{{ card.name }}"></button>
                         </div>
                     {% endfor %}
                 {% else %}
