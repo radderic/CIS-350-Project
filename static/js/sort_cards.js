@@ -1,3 +1,4 @@
+"use strict";
 //all cards
 var collection;
 var sealedresult = [];
@@ -12,8 +13,8 @@ $.ajax({
     data : {
         fetch : "fetch"
     },
-    type : 'POST',
-    url: '/fetch'
+    type : "POST",
+    url: "/fetch"
 })
 .done(function(data) {
     if(data.error) {
@@ -21,23 +22,23 @@ $.ajax({
     }
     else {
         collection = JSON.parse(data.success);
-        sortRarity(collection);
-        addButtons();
+        sort_rarity(collection);
+        add_buttons();
     }
 });
 
-function sortRarity(collection) {
+function sort_rarity(collection) {
     for(var card in collection) {
-        if(card !== 'count') {
+        if(card !== "count") {
             let count = collection[card].count;
             for(var i = 0; i < count; i++) {
-                if(collection[card].rarity === 'Common'){
+                if(collection[card].rarity === "Common"){
                     commons.push(card);
-                }else if(collection[card].rarity === 'Uncommon'){
+                }else if(collection[card].rarity === "Uncommon"){
                     uncommons.push(card);
-                }else if(collection[card].rarity === 'Rare'){
+                }else if(collection[card].rarity === "Rare"){
                     rares.push(card);
-                }else if(collection[card].rarity === 'Mythic'){
+                }else if(collection[card].rarity === "Mythic"){
                     mythics.push(card);
                 }
                 //else invalid rarity - add warning here in second release?
@@ -46,14 +47,14 @@ function sortRarity(collection) {
     }
 }
 
-function addButtons(){
+function add_buttons(){
     $(".controls").append(`
-    <button onclick="sort_cards:simulateSealed()">Simulate Sealed</button>
-    <button  onclick="sort_cards:clearDeck()">Clear Deck</button>
+    <button onclick="sort_cards:simulate_sealed()">Simulate Sealed</button>
+    <button  onclick="sort_cards:clear_deck()">Clear Deck</button>
     `);
 }
 
-function simulateSealed () {
+function simulate_sealed () {
     //numbers of each rarity opened in a sealed draft - rares and mythics subject to change
     var numCommons = 60;
     var numUncommons = 18;
@@ -100,7 +101,7 @@ function simulateSealed () {
             }
             else if(tempRares.length > 0) {
                 let tempIndex = Math.floor(Math.random() * tempRares.length);
-                sealedresult.push(rares[tempIndex]);
+                sealedresult.push(tempRares[tempIndex]);
                 tempRares.splice(tempIndex,1);
             }
             // we must have run out of rares, use mythics
@@ -112,7 +113,7 @@ function simulateSealed () {
         }
         display_cards();
     }
-    //else colllection needs more cards TODO print warning to user
+    //else collection needs more cards TODO print warning to user
 }
 
 function display_cards() {
@@ -124,8 +125,8 @@ function display_cards() {
     //display each element in sealedresult
     for(var index in sealedresult) {
         let card_id = sealedresult[index];
-        let card_img = collection[card_id]['image_url'];
-        let name = collection[card_id]['card_name'];
+        let card_img = collection[card_id].image_url;
+        let name = collection[card_id].card_name;
         $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
                 <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
             </div>`);
@@ -134,8 +135,7 @@ function display_cards() {
     for(var key in deck){
         let card_id = key;
         let count = deck[key];
-        let card_img = collection[card_id]['image_url'];
-        let name = collection[card_id]['card_name'];
+        let name = collection[card_id].card_name;
         $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
                 <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
             </div>`);
@@ -176,7 +176,7 @@ function remove_from_deck(card_id){
     display_cards();
 }
 
-function clearDeck(){
+function clear_deck(){
     for(var card_id in deck){
         let count = deck[card_id];
         for(let i = 0; i < count; i++){
