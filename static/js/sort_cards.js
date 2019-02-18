@@ -24,6 +24,7 @@ $.ajax({
         collection = JSON.parse(data.success);
         sort_rarity(collection);
         add_buttons();
+        updateExport();
     }
 });
 
@@ -159,6 +160,7 @@ function add_to_deck(card_id){
             break;
         }
     }
+    updateExport();
     display_cards();
 }
 
@@ -173,6 +175,7 @@ function remove_from_deck(card_id){
     else {
         deck[card_id] = count - 1;
     }
+    updateExport();
     display_cards();
 }
 
@@ -184,5 +187,20 @@ function clear_deck(){
         }
         delete deck[card_id];
     }
+    updateExport();
     display_cards();
+}
+
+function updateExport() {
+    let filename = "mtgdeck.json";
+    let deckJson = {}; 
+    let deckLength = Object.keys(deck).length;
+    if(deckLength > 0) {
+        for(let id in deck) {
+            deckJson[id] = collection[id];
+            deckJson[id]['count'] = deck[id];
+        }
+    }
+    let base64_deck = btoa(JSON.stringify(deckJson, null, 1));
+    $("#export").attr("href", "data:application/octet-stream;charset=utf-16le;base64," + base64_deck);
 }

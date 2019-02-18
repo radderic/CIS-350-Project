@@ -59,7 +59,6 @@ nav li{
 /*removes underline and changes nav link text color to white*/
 nav li a{
     text-decoration: none; 
-    color: #ffffff;
 }
 
 /*background color for body*/
@@ -221,7 +220,7 @@ button:hover{
 }
 
 .results-container {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 800px;
     width: 70%;
     margin-right: .2em;
@@ -238,7 +237,7 @@ button:hover{
 
 /*Styles the container holding the deck for Sealed format*/
 .picks-container {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 800px;
     width: 29%;
     margin-right: .2em;
@@ -297,7 +296,7 @@ button:hover{
     
     nav li a:hover{color: #72f766;}
     
-    nav li a:visited{color: #644277;}
+    nav li a:visited{color: #ffffff;}
     
     /*sets the logo layout*/
     header img {

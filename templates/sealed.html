@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-        <link rel="icon" href="images/favicon.png">
+        <link rel="icon" href="/static/images/favicon.png">
     </head>
 
     <body>
@@ -24,7 +24,9 @@
             </nav>
             <main class="sealed-split">
                 <!--populated with buttons via jscript-->
-                <div class="controls"></div>
+                <div class="controls">
+                    <a id="export" download="deck.json"><button>Export</button></a>
+                </div>
                 <div class="results-container">
                     <h2>Simulation Results</h2>
                     <!--Contains the cards in the sealed result as images-->
