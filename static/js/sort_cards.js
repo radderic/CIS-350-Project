@@ -9,25 +9,6 @@ var uncommons = [];
 var rares = [];
 var mythics = [];
 
-$.ajax({
-    data : {
-        fetch : "fetch"
-    },
-    type : "POST",
-    url: "/fetch"
-})
-.done(function(data) {
-    if(data.error) {
-        console.log(data.error);
-    }
-    else {
-        collection = JSON.parse(data.success);
-        sort_rarity(collection);
-        add_buttons();
-        updateExport();
-    }
-});
-
 function sort_rarity(collection) {
     for(var card in collection) {
         if(card !== "count") {
@@ -53,6 +34,64 @@ function add_buttons(){
     <button onclick="sort_cards:simulate_sealed()">Simulate Sealed</button>
     <button  onclick="sort_cards:clear_deck()">Clear Deck</button>
     `);
+}
+
+function updateExport() {
+    let deckJson = {}; 
+    let deckLength = Object.keys(deck).length;
+    if(deckLength > 0) {
+        for(let id in deck) {
+            deckJson[id] = collection[id];
+            deckJson[id]["count"] = deck[id];
+        }
+    }
+    let base64_deck = btoa(JSON.stringify(deckJson, null, 1));
+    $("#export").attr("href", "data:application/octet-stream;charset=utf-16le;base64," + base64_deck);
+}
+
+$.ajax({
+    data : {
+        fetch : "fetch"
+    },
+    type : "POST",
+    url: "/fetch"
+})
+.done(function(data) {
+    if(data.error) {
+        console.log(data.error);
+    }
+    else {
+        collection = JSON.parse(data.success);
+        sort_rarity(collection);
+        add_buttons();
+        updateExport();
+    }
+});
+
+function display_cards() {
+    //clear current display
+    $("#sealed-results").text("");
+    $("#sealed-picks").text("");
+    //re-sort lists
+    sealedresult.sort();
+    //display each element in sealedresult
+    for(var index in sealedresult) {
+        let card_id = sealedresult[index];
+        let card_img = collection[card_id].image_url;
+        let name = collection[card_id].card_name;
+        $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
+                <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
+            </div>`);
+    }
+    //display each card in deck
+    for(var key in deck){
+        let card_id = key;
+        let count = deck[key];
+        let name = collection[card_id].card_name;
+        $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
+                <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
+            </div>`);
+    }
 }
 
 function simulate_sealed () {
@@ -117,32 +156,6 @@ function simulate_sealed () {
     //else collection needs more cards TODO print warning to user
 }
 
-function display_cards() {
-    //clear current display
-    $("#sealed-results").text("");
-    $("#sealed-picks").text("");
-    //re-sort lists
-    sealedresult.sort();
-    //display each element in sealedresult
-    for(var index in sealedresult) {
-        let card_id = sealedresult[index];
-        let card_img = collection[card_id].image_url;
-        let name = collection[card_id].card_name;
-        $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
-                <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
-            </div>`);
-    }
-    //display each card in deck
-    for(var key in deck){
-        let card_id = key;
-        let count = deck[key];
-        let name = collection[card_id].card_name;
-        $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
-                <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
-            </div>`);
-    }
-}
-
 function add_to_deck(card_id){
     //if card is already in deck, increase its count
     if(card_id in deck){
@@ -189,18 +202,4 @@ function clear_deck(){
     }
     updateExport();
     display_cards();
-}
-
-function updateExport() {
-    let filename = "mtgdeck.json";
-    let deckJson = {}; 
-    let deckLength = Object.keys(deck).length;
-    if(deckLength > 0) {
-        for(let id in deck) {
-            deckJson[id] = collection[id];
-            deckJson[id]['count'] = deck[id];
-        }
-    }
-    let base64_deck = btoa(JSON.stringify(deckJson, null, 1));
-    $("#export").attr("href", "data:application/octet-stream;charset=utf-16le;base64," + base64_deck);
 }

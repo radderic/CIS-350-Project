@@ -12,7 +12,7 @@
   // with different skill levels.
 
   "bitwise"       : false,     // Prohibit bitwise operators (&, |, ^, etc.).
-  "curly"         : false,     // Require {} for every new block or scope.
+  "curly"         : true,     // Require {} for every new block or scope.
   "eqeqeq"        : false,     // Require triple equals i.e. `===`.
   "forin"         : false,     // Tolerate `for in` loops without `hasOwnPrototype`.
   "freeze"        : true,     // Prohibits overwriting prototypes of native objects such as Array, Date
@@ -43,7 +43,7 @@
   "esnext"        : true,    // Allow ES.next specific features such as `const` and `let`.
   "evil"          : false,    // Tolerate use of `eval`.
   "expr"          : false,    // Tolerate `ExpressionStatement` as Programs.
-  "funcscope"     : true,    // Tolerate declarations of variables inside of control structures while accessing them later from the outside.
+  "funcscope"     : false,    // Tolerate declarations of variables inside of control structures while accessing them later from the outside.
   "globalstrict"  : true,    // Allow global "use strict" (also enables 'strict').
   "iterator"      : false,    // Allow usage of __iterator__ property.
   "lastsemic"     : false,    // Tolerate missing semicolons when the it is omitted for the last statement in a one-line block.
@@ -71,9 +71,9 @@
   "dojo"          : false,    // Enable globals exposed by Dojo Toolkit.
   "jquery"        : true,    // Enable globals exposed by jQuery JavaScript library.
   "mootools"      : false,    // Enable globals exposed by MooTools JavaScript framework.
-  "node"          : true,    // Enable globals available when code is running inside of the NodeJS runtime environment.
+  "node"          : false,    // Enable globals available when code is running inside of the NodeJS runtime environment.
   "nonstandard"   : false,    // Define non-standard but widely adopted globals such as escape and unescape.
-  "phantom"       : true,     // Enable globbals exposed by PhantomJS
+  "phantom"       : false,     // Enable globbals exposed by PhantomJS
   "prototypejs"   : false,    // Enable globals exposed by Prototype JavaScript framework.
   "rhino"         : false,    // Enable globals available when your code is running inside of the Rhino runtime environment.
   "wsh"           : false,    // Enable globals available when your code is running as a script for the Windows Script Host.
