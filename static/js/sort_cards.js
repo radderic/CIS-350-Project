@@ -9,6 +9,12 @@ var uncommons = [];
 var rares = [];
 var mythics = [];
 
+/**
+ * Function: Sort Rarity
+ * Takes the entire collection (draft pool of cards) and breaks it down into arrays by rarity.
+ * 
+ * @param {*} collection The array of cards to be included in the draft pool
+ */
 function sort_rarity(collection) {
     for(var card in collection) {
         if(card !== "count") {
@@ -29,6 +35,10 @@ function sort_rarity(collection) {
     }
 }
 
+/**
+ * Function: add_buttons
+ * Populates the controls div of sealed.html with buttons embedded with javascript functions
+ */
 function add_buttons(){
     $(".controls").append(`
     <button onclick="sort_cards:simulate_sealed()">Simulate Sealed</button>
@@ -36,7 +46,11 @@ function add_buttons(){
     `);
 }
 
-function updateExport() {
+/**
+ * Function: update_export
+ * Updates the value to be used by the export button
+ */
+function update_export() {
     let deckJson = {}; 
     let deckLength = Object.keys(deck).length;
     if(deckLength > 0) {
@@ -49,6 +63,10 @@ function updateExport() {
     $("#export").attr("href", "data:application/octet-stream;charset=utf-16le;base64," + base64_deck);
 }
 
+/**
+ * Function: $.ajax
+ * Parses the json collection and stores it as an instance variable, then executes startup functions: sort_rarity, add_buttons, and update_export
+ */
 $.ajax({
     data : {
         fetch : "fetch"
@@ -64,10 +82,14 @@ $.ajax({
         collection = JSON.parse(data.success);
         sort_rarity(collection);
         add_buttons();
-        updateExport();
+        update_export();
     }
 });
 
+/**
+ * Function: display_cards
+ * Displays the sealedresult and deck displays on the webpage
+ */
 function display_cards() {
     //clear current display
     $("#sealed-results").text("");
@@ -94,6 +116,10 @@ function display_cards() {
     }
 }
 
+/**
+ * Function: simulate_sealed
+ * Generates a pool of cards for the sealedresult from the collection
+ */
 function simulate_sealed () {
     //numbers of each rarity opened in a sealed draft - rares and mythics subject to change
     var numCommons = 60;
@@ -156,6 +182,11 @@ function simulate_sealed () {
     //else collection needs more cards TODO print warning to user
 }
 
+/**
+ * Function: add_to_deck
+ * Takes a card with the given card_id, removes it from sealedresult, and adds it to the deck
+ * @param {*} card_id the identifier code of the card to be moved from sealedresult to deck
+ */
 function add_to_deck(card_id){
     //if card is already in deck, increase its count
     if(card_id in deck){
@@ -173,10 +204,15 @@ function add_to_deck(card_id){
             break;
         }
     }
-    updateExport();
+    update_export();
     display_cards();
 }
 
+/**
+ * Function: remove_from_deck
+ * Takes a card with the given card_id, removes it from the deck, and adds it to sealedresult
+ * @param {*} card_id the identifier code of the card to be moved from the deck to sealedresult
+ */
 function remove_from_deck(card_id){
     let count = deck[card_id];
     sealedresult.push(card_id);
@@ -188,7 +224,7 @@ function remove_from_deck(card_id){
     else {
         deck[card_id] = count - 1;
     }
-    updateExport();
+    update_export();
     display_cards();
 }
 
@@ -200,6 +236,6 @@ function clear_deck(){
         }
         delete deck[card_id];
     }
-    updateExport();
+    update_export();
     display_cards();
 }
