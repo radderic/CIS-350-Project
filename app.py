@@ -1,7 +1,20 @@
+"""
+The backend for running a Magic the Gathering server which fetches Magic card information
+    using the mtgsdk package and sends it back to the frontend for displaying.
+
+    This manages:
+        - generating and sending the editcollection.html template with pagination
+        - quering the mtgsdk for cards based on frontend selections via query strings (GET requests)
+        - creating and modifying the users session data which holds the current deck being built
+        - adding, subtracting and clearing cards from the session data (POST requests)
+        - ajax requests to fetch the session data if it exists (POST requests)
+        - routing to additional html pages as needed
+"""
+
+from json import dumps
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from mtgsdk import Card, Set
 from utils.magic_card import MagicCard
-from json import dumps
 
 app = Flask(__name__)
 
@@ -18,13 +31,24 @@ app.secret_key = "test"
 
 @app.route('/search/page/<int:page>', methods=['GET', 'POST'])
 def search(page):
-    if(page < 1):
+    """
+    Manges the editcollection.html template which a user can search for cards
+        via the mtgsdk.
+
+        At most 10 cards are sent back to the page, if there are cards on the next page
+        there will be an option to change page available via the template.
+            - the template has a button "Next Page", when clicked it sends back the current page + 1
+
+        The user may add, subtract and clear them to session data, to create a pool from which
+            to simulate a draft from
+    """
+    if page < 1:
         return redirect(url_for('not_found'))
 
-    #create a draft_deck if it doesn't exist
-    if('draft_deck' not in session):
-        session['draft_deck'] = {}
-        session['draft_deck']['count'] = 0
+    #create a card_pool if it doesn't exist
+    if 'card_pool' not in session:
+        session['card_pool'] = {}
+        session['card_pool']['count'] = 0
 
     #get string querys from url to use for search
     name = request.args.get('name')
@@ -33,110 +57,168 @@ def search(page):
     card_type = request.args.get('type')
 
     #search using the mtgapi
-    cards = Card.where(name=name,
-            page=page,
-            types=card_type,
-            colors=color,
-            setName=set_name,
-            contains='multiverseId').where(pageSize=10).all()
+    cards = Card.where(
+        name=name,
+        page=page,
+        types=card_type,
+        colors=color,
+        setName=set_name,
+        contains='multiverseId').where(pageSize=10).all()
 
     session['cache'] = {}
     for card in cards:
         session['cache'].update(MagicCard(card).to_dict())
 
     #handle pagination
-    hasPrev = False
-    hasNext = False
-    if(page > 1):
-        hasPrev = True
-    nextPageCards = Card.where(
-            name=name,
-            page=page+1,
-            types=card_type,
-            colors=color,
-            setName=set_name,
-            contains='multiverseId').where(pageSize=10).all()
-    if(len(nextPageCards) > 0):
-        hasNext = True
+    has_prev = False
+    has_next = False
+    if page > 1:
+        has_prev = True
+    next_page_cards = Card.where(
+        name=name,
+        page=page+1,
+        types=card_type,
+        colors=color,
+        setName=set_name,
+        contains='multiverseId').where(pageSize=10).all()
 
-    return render_template('editcollection.html', set_names=set_names, cards=cards, hasNext=hasNext, hasPrev=hasPrev, page=page)
+    if next_page_cards:
+        has_next = True
+
+    return render_template(
+        'editcollection.html',
+        set_names=set_names,
+        cards=cards,
+        has_next=has_next,
+        has_prev=has_prev,
+        page=page)
 
 @app.route('/')
 def index():
+    """
+    Routes users to the homepage
+    """
     return render_template('index.html')
-    #return redirect(url_for('search', page=1), code=302)
 
 @app.route('/add', methods=['POST'])
 def add_card():
-    if('draft_deck' not in session):
+    """
+    Manages the addtion of cards to the users session data
+
+    A card is requested to be added by multiverse_id (unique to each card)
+        to be added to card_pool
+
+    If a card_pool doesn't exist yet, it is created here initialized as
+        an empty dictionary in the session variable called card_pool.
+        It is given an additional field 'count' which is the total number of cards
+        in the card pool so far.
+
+    Overall this should be imagined as a JSON format that will be sent to the frontend
+        for parsing.
+
+    A card can only be added if it exists in the session data variable 'cache'
+    The cache specifically holds data for each card being viewed on the CURRENT page.
+
+    The cache handles two very important things:
+        1. It removes the need to query the database more than once per page
+        2. Guarentees that the user cannot add cards that do not exist
+
+    Once the card is found in the cache it copies the data regarding that specific
+        card into card_pool so it maybe interpretted as a JSON structure
+
+    Finally the session data card_pool is converted to a string (jsonify)
+    and sent back to the frontend for parsing.
+    """
+    if 'card_pool' not in session:
         print('creating draft deck')
-        session['draft_deck'] = {}
-        session['draft_deck']['count'] = 0
+        session['card_pool'] = {}
+        session['card_pool']['count'] = 0
 
-    add_card = request.form.get('add_card')
-    if(add_card and request.method == 'POST'):
-        if(add_card in session['cache']):
-            if(add_card not in session['draft_deck']):
-                if('count' not in session['draft_deck']):
-                    session['draft_deck']['count'] = 0
+    card_to_add = request.form.get('add_card')
+    if card_to_add and request.method == 'POST':
+        if card_to_add in session['cache']:
+            if card_to_add not in session['card_pool']:
+                if 'count' not in session['card_pool']:
+                    session['card_pool']['count'] = 0
                 tmp = {}
-                tmp[add_card] = {}
-                tmp[add_card].update(session['cache'][add_card])
-                session['draft_deck'].update(tmp)
+                tmp[card_to_add] = {}
+                tmp[card_to_add].update(session['cache'][card_to_add])
+                session['card_pool'].update(tmp)
             else:
-                session['draft_deck'][add_card]['count'] += 1
-            session['draft_deck']['count'] += 1
+                session['card_pool'][card_to_add]['count'] += 1
+            session['card_pool']['count'] += 1
             session.modified = True
-            return jsonify({'success' : dumps(session['draft_deck'])})
-        elif(add_card in session['draft_deck']):
-            session['draft_deck'][add_card]['count'] += 1
-            session['draft_deck']['count'] += 1
+            return jsonify({'success' : dumps(session['card_pool'])})
+        elif card_to_add in session['card_pool']:
+            session['card_pool'][card_to_add]['count'] += 1
+            session['card_pool']['count'] += 1
             session.modified = True
-            return jsonify({'success' : dumps(session['draft_deck'])})
+            return jsonify({'success' : dumps(session['card_pool'])})
     return jsonify({'error': 'failed to add'})
-
 
 @app.route('/sub', methods=['POST'])
 def sub_card():
-    if('draft_deck' not in session):
-        return jsonify({'error': 'No cards to subtract'})
+    """
+    Manages the subtraction/removal of a card from session data card_pool
 
-    sub_card = request.form.get('sub_card')
-    if(sub_card and request.method == 'POST'):
-        if(sub_card not in session['draft_deck']):
+    A singular card is requested by multiverse_id (unique to each card) to
+    be removed from card_pool
+
+    If it exists (under specific circumstances it couldn't) it is removed
+        from card_pool
+
+    After removal the newly changed card_pool is sent back to the frontend
+        as a JSON string
+    """
+    if 'card_pool' not in session:
+        return jsonify({'error': 'Card pool does not exist yet'})
+
+    card_to_sub = request.form.get('sub_card')
+    if card_to_sub and request.method == 'POST':
+        if card_to_sub not in session['card_pool']:
             return jsonify({'error': 'Card not found in deck'})
         else:
-            if(session['draft_deck'][sub_card]['count'] == 1):
-                del session['draft_deck'][sub_card]
-            elif(session['draft_deck'][sub_card]['count'] > 1):
-                session['draft_deck'][sub_card]['count'] -= 1
-            session['draft_deck']['count'] -= 1
+            if session['card_pool'][card_to_sub]['count'] == 1:
+                del session['card_pool'][card_to_sub]
+            elif session['card_pool'][card_to_sub]['count'] > 1:
+                session['card_pool'][card_to_sub]['count'] -= 1
+            session['card_pool']['count'] -= 1
             session.modified = True
-            return jsonify({'success' : dumps(session['draft_deck'])})
+            return jsonify({'success' : dumps(session['card_pool'])})
 
 @app.route('/fetch', methods=['POST'])
 def fetch():
-    if('draft_deck' in session):
-        return jsonify({'success' : dumps(session['draft_deck'])})
-    else:
-        return jsonify({'error': 'Nothing to fetch'})
+    """
+    Returns the stored session data that is card_pool via a POST request
+    """
+    if 'card_pool' in session:
+        return jsonify({'success' : dumps(session['card_pool'])})
+    return jsonify({'error': 'Nothing to fetch'})
 
 @app.route('/clear', methods=['POST'])
 def clear():
-    session['draft_deck'] = {}
-    session['draft_deck']['count'] = 0
+    """
+    Empties the session data that is card_pool and sets the count to 0
+    """
+    session['card_pool'] = {}
+    session['card_pool']['count'] = 0
     session.modified = True
-    return jsonify({'success' : dumps(session['draft_deck'])})
+    return jsonify({'success' : dumps(session['card_pool'])})
 
 @app.route('/sealed')
 def sealed():
+    """
+    Routes the user to sealed.html
+    """
     return render_template('sealed.html')
 
 @app.route('/invalid')
 def not_found():
-    #needs legit page
+    """
+    If the user manages to go to an impossible page it returns a blank page
+        with the message 404: Page not found
+    """
     return "404: Page not found"
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
-
