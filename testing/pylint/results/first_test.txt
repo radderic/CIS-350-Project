@@ -1,0 +1,120 @@
+************* Module app
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  6, 0: Constant name "app" doesn't conform to UPPER_CASE naming style (invalid-name)
+C: 10, 0: Constant name "sets" doesn't conform to UPPER_CASE naming style (invalid-name)
+C: 11, 0: Constant name "set_names" doesn't conform to UPPER_CASE naming style (invalid-name)
+C: 20, 0: Missing function docstring (missing-docstring)
+C: 60, 7: Do not use `len(SEQUENCE)` to determine if a sequence is empty (len-as-condition)
+C: 72, 0: Missing function docstring (missing-docstring)
+C: 77, 0: Missing function docstring (missing-docstring)
+W: 83, 4: Redefining name 'add_card' from outer scope (line 77) (redefined-outer-name)
+C:107, 0: Missing function docstring (missing-docstring)
+W:111, 4: Redefining name 'sub_card' from outer scope (line 107) (redefined-outer-name)
+R:107, 0: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)
+C:125, 0: Missing function docstring (missing-docstring)
+C:131, 0: Missing function docstring (missing-docstring)
+C:138, 0: Missing function docstring (missing-docstring)
+C:142, 0: Missing function docstring (missing-docstring)
+
+
+Report
+======
+89 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |8      |8          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    mtgsdk (app)
+    utils 
+      \-magic_card (app)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |118    |79.19 |118      |=          |
++----------+-------+------+---------+-----------+
+|docstring |1      |0.67  |1        |=          |
++----------+-------+------+---------+-----------+
+|comment   |9      |6.04  |9        |=          |
++----------+-------+------+---------+-----------+
+|empty     |21     |14.09 |21       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |13     |13       |=          |
++-----------+-------+---------+-----------+
+|refactor   |1      |1        |=          |
++-----------+-------+---------+-----------+
+|warning    |2      |2        |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++-------------------------------+------------+
+|message id                     |occurrences |
++===============================+============+
+|missing-docstring              |9           |
++-------------------------------+------------+
+|invalid-name                   |3           |
++-------------------------------+------------+
+|redefined-outer-name           |2           |
++-------------------------------+------------+
+|len-as-condition               |1           |
++-------------------------------+------------+
+|inconsistent-return-statements |1           |
++-------------------------------+------------+
+
+
+
+
+------------------------------------------------------------------
+Your code has been rated at 8.20/10 (previous run: 8.20/10, +0.00)
+

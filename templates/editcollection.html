@@ -49,14 +49,14 @@
         <div class="split">
             <div class="results-container">
                 <div class="page-links">
-                {% if hasPrev %}
+                {% if has_prev %}
                     <a class="page-control page-left" href="{{url_for('search', page=page-1,
                         name=request.args.get('name'),
                         color=request.args.get('color'),
                         set=request.args.get('set'),
                         type=request.args.get('type'))}}">&lt; Prev Page</a>
                 {% endif %}
-                {% if hasNext %}
+                {% if has_next %}
                     <a class="page-control page-right" href="{{url_for('search', page=page+1,
                         name=request.args.get('name'),
                         color=request.args.get('color'),

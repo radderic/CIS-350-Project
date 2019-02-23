@@ -1,4 +1,32 @@
-"use strict";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sort_cards.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sort_cards.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
 //all cards
 var collection;
 var sealedresult = [];
@@ -19,7 +47,7 @@ function sort_rarity(collection) {
     for(var card in collection) {
         if(card !== "count") {
             let count = collection[card].count;
-            for(var i = 0; i < count; i++) {
+            for(var i = 0; i &lt; count; i++) {
                 if(collection[card].rarity === "Common"){
                     commons.push(card);
                 }else if(collection[card].rarity === "Uncommon"){
@@ -41,8 +69,8 @@ function sort_rarity(collection) {
  */
 function add_buttons(){
     $(".controls").append(`
-    <button onclick="sort_cards:simulate_sealed()">Simulate Sealed</button>
-    <button  onclick="sort_cards:clear_deck()">Clear Deck</button>
+    &lt;button onclick="sort_cards:simulate_sealed()">Simulate Sealed&lt;/button>
+    &lt;button  onclick="sort_cards:clear_deck()">Clear Deck&lt;/button>
     `);
 }
 
@@ -101,18 +129,18 @@ function display_cards() {
         let card_id = sealedresult[index];
         let card_img = collection[card_id].image_url;
         let name = collection[card_id].card_name;
-        $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
-                <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
-            </div>`);
+        $("#sealed-results").append(`&lt;div class="sealed-card" id="${card_id}">
+                &lt;img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
+            &lt;/div>`);
     }
     //display each card in deck
     for(var key in deck){
         let card_id = key;
         let count = deck[key];
         let name = collection[card_id].card_name;
-        $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
-                <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
-            </div>`);
+        $("#sealed-picks").append(`&lt;div class="deck-card" id="${card_id}">
+                &lt;p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} &lt;/p>
+            &lt;/div>`);
     }
 }
 
@@ -135,11 +163,11 @@ function simulate_sealed () {
     deck = {};
 
     //numMythics compared against "magic number" 6 because it's the max possible mythics
-    if(tempCommons.length >= numCommons && uncommons.length >= numUncommons &&
+    if(tempCommons.length >= numCommons &amp;&amp; uncommons.length >= numUncommons &amp;&amp;
         (rares.length + mythics.length) >= numRares){
 
         //select 60 random commons
-        for(let i = 0; i < numCommons; i++){
+        for(let i = 0; i &lt; numCommons; i++){
             //select an index
             let tempIndex = Math.floor(Math.random() * tempCommons.length);
             //add card to sealedresult
@@ -148,17 +176,17 @@ function simulate_sealed () {
             tempCommons.splice(tempIndex,1);
         }
         //select 18 random uncommons
-        for(let i = 0; i < numUncommons; i++){
+        for(let i = 0; i &lt; numUncommons; i++){
             let tempIndex = Math.floor(Math.random() * tempUncommons.length);
             sealedresult.push(tempUncommons[tempIndex]);
             tempUncommons.splice(tempIndex,1);
         }
         //select up to 6 random rares, with a 12.5% chance on each to be replaced by a mythic
-        for(let i = 0; i < numRares; i++){
+        for(let i = 0; i &lt; numRares; i++){
             //check for a random chance to upgrade otherwise it remains a rare
             let mythic = Math.floor(Math.random() * 1000);
             //"magic number" 124 derived from 12.5% chance for a rare to become a mythic
-            if (mythic <= 124){
+            if (mythic &lt;= 124){
                 if(tempMythics.length > 0) {
                     let tempIndex = Math.floor(Math.random() * tempMythics.length);
                     sealedresult.push(tempMythics[tempIndex]);
@@ -217,7 +245,7 @@ function remove_from_deck(card_id){
     let count = deck[card_id];
     sealedresult.push(card_id);
     //Remove from deck if one or less (meaning 0 after the card is removed)
-    if(count <= 1){
+    if(count &lt;= 1){
         delete deck[card_id];
     } 
     //else decrement count by one
@@ -231,11 +259,33 @@ function remove_from_deck(card_id){
 function clear_deck(){
     for(var card_id in deck){
         let count = deck[card_id];
-        for(let i = 0; i < count; i++){
+        for(let i = 0; i &lt; count; i++){
             sealedresult.push(card_id);
         }
         delete deck[card_id];
     }
     update_export();
     display_cards();
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_buttons">add_buttons</a></li><li><a href="global.html#add_to_deck">add_to_deck</a></li><li><a href="global.html#display_cards">display_cards</a></li><li><a href="global.html#remove_from_deck">remove_from_deck</a></li><li><a href="global.html#simulate_sealed">simulate_sealed</a></li><li><a href="global.html#sort_rarity">sort_rarity</a></li><li><a href="global.html#update_export">update_export</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 22 2019 13:30:06 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

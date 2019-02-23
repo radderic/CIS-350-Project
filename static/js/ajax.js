@@ -99,6 +99,11 @@ function reload_buttons() {
 
 }
 
+/**
+ * Function: display_cards
+ * Takes data and transforms it into a list to display to the user
+ * @param {*} data a collection of cards as a JSON object
+ */
 function display_cards(data) {
     collection = JSON.parse(data);
     let total = collection.count;
