@@ -22,6 +22,7 @@ class MagicCard(object):
 
         self.count = 1
 
+    #potential feature for next release
     def to_json(self):
         return dumps({
             self.multiverse_id: {

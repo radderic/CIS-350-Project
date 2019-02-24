@@ -12,8 +12,9 @@ The backend for running a Magic the Gathering server which fetches Magic card in
 """
 
 from json import dumps
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, session, jsonify, abort
 from mtgsdk import Card, Set
+from mtgsdk.restclient import MtgException
 from utils.magic_card import MagicCard
 
 app = Flask(__name__)
@@ -43,7 +44,7 @@ def search(page):
             to simulate a draft from
     """
     if page < 1:
-        return redirect(url_for('not_found'))
+        abort(404)
 
     #create a card_pool if it doesn't exist
     if 'card_pool' not in session:
@@ -51,19 +52,22 @@ def search(page):
         session['card_pool']['count'] = 0
 
     #get string querys from url to use for search
-    name = request.args.get('name')
-    color = request.args.get('color')
-    set_name = request.args.get('set')
-    card_type = request.args.get('type')
+    name = request.args.get('name', default="")
+    color = request.args.get('color', default="")
+    set_name = request.args.get('set', default="")
+    card_type = request.args.get('type', default="")
 
     #search using the mtgapi
-    cards = Card.where(
-        name=name,
-        page=page,
-        types=card_type,
-        colors=color,
-        setName=set_name,
-        contains='multiverseId').where(pageSize=10).all()
+    try:
+        cards = Card.where(
+            name=name,
+            page=page,
+            types=card_type,
+            colors=color,
+            setName=set_name,
+            contains='multiverseId').where(pageSize=10).all()
+    except MtgException:
+        abort(404)
 
     session['cache'] = {}
     for card in cards:
@@ -130,31 +134,30 @@ def add_card():
     and sent back to the frontend for parsing.
     """
     if 'card_pool' not in session:
-        print('creating draft deck')
         session['card_pool'] = {}
         session['card_pool']['count'] = 0
 
-    card_to_add = request.form.get('add_card')
-    if card_to_add and request.method == 'POST':
-        if card_to_add in session['cache']:
-            if card_to_add not in session['card_pool']:
-                if 'count' not in session['card_pool']:
-                    session['card_pool']['count'] = 0
-                tmp = {}
-                tmp[card_to_add] = {}
-                tmp[card_to_add].update(session['cache'][card_to_add])
-                session['card_pool'].update(tmp)
-            else:
+    if 'cache' in session:
+        card_to_add = request.form.get('add_card')
+        if card_to_add and request.method == 'POST':
+            if card_to_add in session['cache']:
+                if card_to_add not in session['card_pool']:
+                    tmp = {}
+                    tmp[card_to_add] = {}
+                    tmp[card_to_add].update(session['cache'][card_to_add])
+                    session['card_pool'].update(tmp)
+                else:
+                    session['card_pool'][card_to_add]['count'] += 1
+                session['card_pool']['count'] += 1
+                session.modified = True
+                return jsonify({'success' : dumps(session['card_pool'])})
+            elif card_to_add in session['card_pool']:
                 session['card_pool'][card_to_add]['count'] += 1
-            session['card_pool']['count'] += 1
-            session.modified = True
-            return jsonify({'success' : dumps(session['card_pool'])})
-        elif card_to_add in session['card_pool']:
-            session['card_pool'][card_to_add]['count'] += 1
-            session['card_pool']['count'] += 1
-            session.modified = True
-            return jsonify({'success' : dumps(session['card_pool'])})
+                session['card_pool']['count'] += 1
+                session.modified = True
+                return jsonify({'success' : dumps(session['card_pool'])})
     return jsonify({'error': 'failed to add'})
+
 
 @app.route('/sub', methods=['POST'])
 def sub_card():
@@ -212,13 +215,14 @@ def sealed():
     """
     return render_template('sealed.html')
 
-@app.route('/invalid')
-def not_found():
+#@app.route('/invalid')
+@app.errorhandler(404)
+def page_not_found(e):
     """
     If the user manages to go to an impossible page it returns a blank page
         with the message 404: Page not found
     """
-    return "404: Page not found"
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
