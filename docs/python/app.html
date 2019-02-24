@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module app</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>app</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="app.py">app.py</a><br><a href="coverage">coverage</a></font></td></tr></table>
+    <p><tt>The&nbsp;backend&nbsp;for&nbsp;running&nbsp;a&nbsp;Magic&nbsp;the&nbsp;Gathering&nbsp;server&nbsp;which&nbsp;fetches&nbsp;Magic&nbsp;card&nbsp;information<br>
+&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;the&nbsp;mtgsdk&nbsp;package&nbsp;and&nbsp;sends&nbsp;it&nbsp;back&nbsp;to&nbsp;the&nbsp;frontend&nbsp;for&nbsp;displaying.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;manages:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;generating&nbsp;and&nbsp;sending&nbsp;the&nbsp;editcollection.html&nbsp;template&nbsp;with&nbsp;pagination<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;quering&nbsp;the&nbsp;mtgsdk&nbsp;for&nbsp;cards&nbsp;based&nbsp;on&nbsp;frontend&nbsp;selections&nbsp;via&nbsp;query&nbsp;strings&nbsp;(GET&nbsp;requests)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;creating&nbsp;and&nbsp;modifying&nbsp;the&nbsp;users&nbsp;session&nbsp;data&nbsp;which&nbsp;holds&nbsp;the&nbsp;current&nbsp;deck&nbsp;being&nbsp;built<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;adding,&nbsp;subtracting&nbsp;and&nbsp;clearing&nbsp;cards&nbsp;from&nbsp;the&nbsp;session&nbsp;data&nbsp;(POST&nbsp;requests)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ajax&nbsp;requests&nbsp;to&nbsp;fetch&nbsp;the&nbsp;session&nbsp;data&nbsp;if&nbsp;it&nbsp;exists&nbsp;(POST&nbsp;requests)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;routing&nbsp;to&nbsp;additional&nbsp;html&nbsp;pages&nbsp;as&nbsp;needed</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-add_card"><strong>add_card</strong></a>()</dt><dd><tt>Manages&nbsp;the&nbsp;addtion&nbsp;of&nbsp;cards&nbsp;to&nbsp;the&nbsp;users&nbsp;session&nbsp;data<br>
+&nbsp;<br>
+A&nbsp;card&nbsp;is&nbsp;requested&nbsp;to&nbsp;be&nbsp;added&nbsp;by&nbsp;multiverse_id&nbsp;(unique&nbsp;to&nbsp;each&nbsp;card)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;added&nbsp;to&nbsp;card_pool<br>
+&nbsp;<br>
+If&nbsp;a&nbsp;card_pool&nbsp;doesn't&nbsp;exist&nbsp;yet,&nbsp;it&nbsp;is&nbsp;created&nbsp;here&nbsp;initialized&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;empty&nbsp;dictionary&nbsp;in&nbsp;the&nbsp;session&nbsp;variable&nbsp;called&nbsp;card_pool.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;is&nbsp;given&nbsp;an&nbsp;additional&nbsp;field&nbsp;'count'&nbsp;which&nbsp;is&nbsp;the&nbsp;total&nbsp;number&nbsp;of&nbsp;cards<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;card&nbsp;pool&nbsp;so&nbsp;far.<br>
+&nbsp;<br>
+Overall&nbsp;this&nbsp;should&nbsp;be&nbsp;imagined&nbsp;as&nbsp;a&nbsp;JSON&nbsp;format&nbsp;that&nbsp;will&nbsp;be&nbsp;sent&nbsp;to&nbsp;the&nbsp;frontend<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;parsing.<br>
+&nbsp;<br>
+A&nbsp;card&nbsp;can&nbsp;only&nbsp;be&nbsp;added&nbsp;if&nbsp;it&nbsp;exists&nbsp;in&nbsp;the&nbsp;session&nbsp;data&nbsp;variable&nbsp;'cache'<br>
+The&nbsp;cache&nbsp;specifically&nbsp;holds&nbsp;data&nbsp;for&nbsp;each&nbsp;card&nbsp;being&nbsp;viewed&nbsp;on&nbsp;the&nbsp;CURRENT&nbsp;page.<br>
+&nbsp;<br>
+The&nbsp;cache&nbsp;handles&nbsp;two&nbsp;very&nbsp;important&nbsp;things:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;It&nbsp;removes&nbsp;the&nbsp;need&nbsp;to&nbsp;query&nbsp;the&nbsp;database&nbsp;more&nbsp;than&nbsp;once&nbsp;per&nbsp;page<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Guarentees&nbsp;that&nbsp;the&nbsp;user&nbsp;cannot&nbsp;add&nbsp;cards&nbsp;that&nbsp;do&nbsp;not&nbsp;exist<br>
+&nbsp;<br>
+Once&nbsp;the&nbsp;card&nbsp;is&nbsp;found&nbsp;in&nbsp;the&nbsp;cache&nbsp;it&nbsp;copies&nbsp;the&nbsp;data&nbsp;regarding&nbsp;that&nbsp;specific<br>
+&nbsp;&nbsp;&nbsp;&nbsp;card&nbsp;into&nbsp;card_pool&nbsp;so&nbsp;it&nbsp;maybe&nbsp;interpretted&nbsp;as&nbsp;a&nbsp;JSON&nbsp;structure<br>
+&nbsp;<br>
+Finally&nbsp;the&nbsp;session&nbsp;data&nbsp;card_pool&nbsp;is&nbsp;converted&nbsp;to&nbsp;a&nbsp;string&nbsp;(jsonify)<br>
+and&nbsp;sent&nbsp;back&nbsp;to&nbsp;the&nbsp;frontend&nbsp;for&nbsp;parsing.</tt></dd></dl>
+ <dl><dt><a name="-clear"><strong>clear</strong></a>()</dt><dd><tt>Empties&nbsp;the&nbsp;session&nbsp;data&nbsp;that&nbsp;is&nbsp;card_pool&nbsp;and&nbsp;sets&nbsp;the&nbsp;count&nbsp;to&nbsp;0</tt></dd></dl>
+ <dl><dt><a name="-fetch"><strong>fetch</strong></a>()</dt><dd><tt>Returns&nbsp;the&nbsp;stored&nbsp;session&nbsp;data&nbsp;that&nbsp;is&nbsp;card_pool&nbsp;via&nbsp;a&nbsp;POST&nbsp;request</tt></dd></dl>
+ <dl><dt><a name="-index"><strong>index</strong></a>()</dt><dd><tt>Routes&nbsp;users&nbsp;to&nbsp;the&nbsp;homepage</tt></dd></dl>
+ <dl><dt><a name="-page_not_found"><strong>page_not_found</strong></a>(e)</dt><dd><tt>If&nbsp;the&nbsp;user&nbsp;manages&nbsp;to&nbsp;go&nbsp;to&nbsp;an&nbsp;impossible&nbsp;page&nbsp;it&nbsp;returns&nbsp;a&nbsp;blank&nbsp;page<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;the&nbsp;message&nbsp;404:&nbsp;Page&nbsp;not&nbsp;found</tt></dd></dl>
+ <dl><dt><a name="-sealed"><strong>sealed</strong></a>()</dt><dd><tt>Routes&nbsp;the&nbsp;user&nbsp;to&nbsp;sealed.html</tt></dd></dl>
+ <dl><dt><a name="-search"><strong>search</strong></a>(page)</dt><dd><tt>Manges&nbsp;the&nbsp;editcollection.html&nbsp;template&nbsp;which&nbsp;a&nbsp;user&nbsp;can&nbsp;search&nbsp;for&nbsp;cards<br>
+&nbsp;&nbsp;&nbsp;&nbsp;via&nbsp;the&nbsp;mtgsdk.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;At&nbsp;most&nbsp;10&nbsp;cards&nbsp;are&nbsp;sent&nbsp;back&nbsp;to&nbsp;the&nbsp;page,&nbsp;if&nbsp;there&nbsp;are&nbsp;cards&nbsp;on&nbsp;the&nbsp;next&nbsp;page<br>
+&nbsp;&nbsp;&nbsp;&nbsp;there&nbsp;will&nbsp;be&nbsp;an&nbsp;option&nbsp;to&nbsp;change&nbsp;page&nbsp;available&nbsp;via&nbsp;the&nbsp;template.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;template&nbsp;has&nbsp;a&nbsp;button&nbsp;"Next&nbsp;Page",&nbsp;when&nbsp;clicked&nbsp;it&nbsp;sends&nbsp;back&nbsp;the&nbsp;current&nbsp;page&nbsp;+&nbsp;1<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;user&nbsp;may&nbsp;add,&nbsp;subtract&nbsp;and&nbsp;clear&nbsp;them&nbsp;to&nbsp;session&nbsp;data,&nbsp;to&nbsp;create&nbsp;a&nbsp;pool&nbsp;from&nbsp;which<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;simulate&nbsp;a&nbsp;draft&nbsp;from</tt></dd></dl>
+ <dl><dt><a name="-sub_card"><strong>sub_card</strong></a>()</dt><dd><tt>Manages&nbsp;the&nbsp;subtraction/removal&nbsp;of&nbsp;a&nbsp;card&nbsp;from&nbsp;session&nbsp;data&nbsp;card_pool<br>
+&nbsp;<br>
+A&nbsp;singular&nbsp;card&nbsp;is&nbsp;requested&nbsp;by&nbsp;multiverse_id&nbsp;(unique&nbsp;to&nbsp;each&nbsp;card)&nbsp;to<br>
+be&nbsp;removed&nbsp;from&nbsp;card_pool<br>
+&nbsp;<br>
+If&nbsp;it&nbsp;exists&nbsp;(under&nbsp;specific&nbsp;circumstances&nbsp;it&nbsp;couldn't)&nbsp;it&nbsp;is&nbsp;removed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;card_pool<br>
+&nbsp;<br>
+After&nbsp;removal&nbsp;the&nbsp;newly&nbsp;changed&nbsp;card_pool&nbsp;is&nbsp;sent&nbsp;back&nbsp;to&nbsp;the&nbsp;frontend<br>
+&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;a&nbsp;JSON&nbsp;string</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>app</strong> = &lt;Flask 'app'&gt;<br>
+<strong>request</strong> = &lt;LocalProxy unbound&gt;<br>
+<strong>s</strong> = &lt;mtgsdk.set.Set object&gt;<br>
+<strong>session</strong> = &lt;LocalProxy unbound&gt;<br>
+<strong>set_names</strong> = ['Tenth Edition', 'Unlimited Edition', 'Revised Edition', 'Fourth Edition', 'Fifth Dawn', 'Fifth Edition', 'Classic Sixth Edition', 'Seventh Edition', 'Eighth Edition', 'Ninth Edition', 'Masters 25', 'Aether Revolt', 'Amonkhet', 'Shards of Alara', 'Alliances', 'Arena New Player Experience', 'Apocalypse', 'Alara Reborn', 'Archenemy', 'Arabian Nights', ...]</td></tr></table>
+</body></html>
