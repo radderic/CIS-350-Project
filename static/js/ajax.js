@@ -1,6 +1,11 @@
 "use strict";
 var collection;
 
+/**
+ * Function: fetch
+ * On page load submits a post request using JQuery
+ * retrieve the deck created
+ */
 $.ajax({
     data : {
         fetch : "fetch"
@@ -17,6 +22,11 @@ $.ajax({
     }
 });
 
+/**
+ * Function: add_card
+ * On button click it submits a post request using JQuery
+ * to add a card and display
+ */
 $(".add-card").on("click", function(event) {
     $.ajax({
         data : {
@@ -36,6 +46,11 @@ $(".add-card").on("click", function(event) {
     event.preventDefault();
 });
 
+/**
+ * Function: clear_deck
+ * On button clear click submits a post request using JQuery
+ * to clear the deck and display
+ */
 $("#clear-deck").on("click", function(event) {
     $.ajax({
         data : {
@@ -59,6 +74,11 @@ $("#clear-deck").on("click", function(event) {
 });
 
 
+/**
+ * Function: reload_buttons
+ * Each button is dynamically added to the page, thus they need
+ * to remove the event listener and re-add it, hence reload.
+ */
 function reload_buttons() {
     $(".add-card").off().click(function(event) {
         $.ajax({
