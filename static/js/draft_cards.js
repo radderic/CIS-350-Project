@@ -125,17 +125,12 @@ function simulate_draft() {
     var numCommons = 240;
     var numUncommons = 72;
     var numRares = 24;
-    //workaround for javascript not supporting pass by val for arrays
-    var tempCommons = commons.slice();
-    var tempUncommons = uncommons.slice();
-    var tempRares = rares.slice();
-    var tempMythics = mythics.slice();
     //clear existing deck/draftresults if any
     draftresult = [];
     deck = {};
 
     //numMythics compared against "magic number" 24 because it's the max possible mythics
-    if (tempCommons.length >= numCommons && uncommons.length >= numUncommons &&
+    if (commons.length >= numCommons && uncommons.length >= numUncommons &&
         (rares.length + mythics.length) >= numRares) {
 
         //generate and store 24 packs in packarray
@@ -163,6 +158,13 @@ function simulate_draft() {
  */
 function generate_packs() {
     packarray = [];
+    
+    //workaround for javascript not supporting pass by val for arrays
+    let tempCommons = commons.slice();
+    let tempUncommons = uncommons.slice();
+    let tempRares = rares.slice();
+    let tempMythics = mythics.slice();
+
     //generate packs
     for (let i = 0; i < 24; i++) {
         let temppack = [];
@@ -333,6 +335,9 @@ function remove_from_deck(card_id) {
     display_cards();
 }
 
+/**
+ * TODO
+ */
 function clear_deck() {
     for (var card_id in deck) {
         let count = deck[card_id];
