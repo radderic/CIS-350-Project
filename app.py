@@ -215,6 +215,14 @@ def sealed():
     """
     return render_template('sealed.html')
 
+
+@app.route('/draft')
+def draft():
+    """
+    Routes the user to draft.html
+    """
+    return render_template('draft.html')
+
 #@app.route('/invalid')
 @app.errorhandler(404)
 def page_not_found(e):

@@ -12,7 +12,7 @@ var mythics = [];
 /**
  * Function: Sort Rarity
  * Takes the entire collection (draft pool of cards) and breaks it down into arrays by rarity.
- *
+ * 
  * @param {*} collection The array of cards to be included in the draft pool
  */
 function sort_rarity(collection) {

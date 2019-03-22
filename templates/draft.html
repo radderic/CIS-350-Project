@@ -5,8 +5,7 @@
         <title>MtG DraftSim | Draft</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>DraftSim | Home</title>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
         <link rel="icon" href="images/favicon.png">
     </head>
 
@@ -18,19 +17,28 @@
             </header>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li><a href="editcollection.html">Edit Collection</a>
-                    </li>
-                    <li><a href="viewcollection.html">View Collection</a>
-                    </li>
-                    <li><a href="sealed.html">Start Sealed</a>
-                    </li>
+                    <li><a href="{{url_for('search', page=1)}}">Build Card Pool</a></li>
+                    <li><a href="{{url_for('sealed')}}">Start Sealed</a></li>
                 </ul>
             </nav>
-            <div id="main">
-                	<h1>Title of Page Here!</h1>
-            </div>
+            <main class = "draft_split">
+                <!--populated with buttons via jscript-->
+                <div class="controls">
+                    <a id="export" download="deck.json"><button>Export</button></a>
+                </div>
+
+                <div class="results-container">
+                    <h2>Simulation Results</h2>
+                    <!--Contains the cards in the sealed result as images-->
+                    <div id="sealed-results"></div>
+                </div>
+                <div class="picks-container">
+                    <h2>Draft Deck</h2>
+                    <!--Contains the cards added to the deck as buttons-->
+                    <div id="sealed-picks">
+                    </div>
+                </div>
+            </main>
             <footer>
                 <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
             </footer>
