@@ -1,6 +1,24 @@
 # CIS-350-Project
 Card drafting simulator
 
+## Release 2 TODO
+
+Eric:
+    Export Collection button moved to Collection page
+    Import Collection button added to Collection page
+
+Asad:
+    Draft.html - Draft simulation
+    Draft results.html
+    Draft.js - functionality of drafting
+
+Both:
+    test and document
+
+Extra:
+    if time add popups when hovering over card names
+    sort by card type / color options
+
 ## Requirements
 
 [Python 3.4 or higher](https://www.python.org/downloads/)
