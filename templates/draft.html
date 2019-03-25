@@ -12,7 +12,7 @@
     <body>
         <div id="outerwrapper">
             <header>
-                 <a href="index.html"><img src="images/logo.jpg" alt= "Magic the Gathering Logo"></a>
+                 <a href="{{url_for('index')}}"><img src="images/logo.jpg" alt= "Magic the Gathering Logo"></a>
                 <p>Magic the Gathering Sealed and Draft Simulator</p>
             </header>
             <nav>
@@ -29,13 +29,13 @@
 
                 <div class="results-container">
                     <h2>Simulation Results</h2>
-                    <!--Contains the cards in the sealed result as images-->
-                    <div id="sealed-results"></div>
+                    <!--Contains the cards in the draft packs/sideboard as images-->
+                    <div id="draft-results"></div>
                 </div>
                 <div class="picks-container">
                     <h2>Draft Deck</h2>
                     <!--Contains the cards added to the deck as buttons-->
-                    <div id="sealed-picks">
+                    <div id="draft-picks">
                     </div>
                 </div>
             </main>
@@ -44,5 +44,6 @@
             </footer>
         </div>
     </body>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/draft_cards.js')}}"></script>
 </html>

@@ -10,6 +10,15 @@ var uncommons = [];
 var rares = [];
 var mythics = [];
 
+
+//numbers of each rarity opened in a draft - rares and mythics are stored together
+var numCommons = 240;
+var numUncommons = 72;
+var numRares = 24;
+
+//Tracks how far into the draft a user is
+var picknumber = 0;
+
 /**
  * Function: Sort Rarity
  * Takes the entire collection (draft pool of cards) and breaks it down into arrays by rarity.
@@ -42,6 +51,7 @@ function sort_rarity(collection) {
 function add_buttons() {
     $(".controls").append(`
     <button onclick="sort_cards:simulate_draft()">Simulate Draft</button>
+    <button onclick="sort_cards:simulate_draft()">Reset Draft</button>
     <button  onclick="sort_cards:clear_deck()">Clear Deck</button>
     `);
 }
@@ -86,79 +96,74 @@ $.ajax({
         }
     });
 
-/**
- * Function: display_cards
- * Displays the draftresult and deck displays on the webpage
- */
-function display_cards() {
+function display_deck() {
     //clear current display
-    $("#sealed-results").text("");
-    $("#sealed-picks").text("");
-    //re-sort lists
+    $("#draft-picks").text("");
+    //display each card in deck
+    for (var key in deck) {
+        let card_id = key;
+        let count = deck[key];
+        let name = collection[card_id].card_name;
+        $("#draft-picks").append(`<div class="deck-card" id="${card_id}">
+                <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
+            </div>`);
+    }
+}
+
+function display_sideboard() {
+    //clear current display
+    $("#draft-results").text("");
+    //re-sort list
     draftresult.sort();
     //display each element in draftresult
     for (var index in draftresult) {
         let card_id = draftresult[index];
         let card_img = collection[card_id].image_url;
         let name = collection[card_id].card_name;
-        $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
-                <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
-            </div>`);
-    }
-    //display each card in deck
-    for (var key in deck) {
-        let card_id = key;
-        let count = deck[key];
-        let name = collection[card_id].card_name;
-        $("#sealed-picks").append(`<div class="deck-card" id="${card_id}">
-                <p onclick="sort_cards:remove_from_deck(${card_id})">${count}x ${name} </p>
+        $("#draft-results").append(`<div class="draft-card" id="${card_id}">
+            <img onclick="sort_cards:add_to_deck(${card_id})" src=${card_img} alt=${name}/>
             </div>`);
     }
 }
 
 /**
- * Function: simulate_draft
- * TODO
+ * Function: display_cards
+ * Displays the draftresult (sideboard) and deck to the webpage
  */
-function simulate_draft() {
-    //numbers of each rarity opened in a draft - rares and mythics subject to change
-    var numCommons = 240;
-    var numUncommons = 72;
-    var numRares = 24;
-    //clear existing deck/draftresults if any
-    draftresult = [];
-    deck = {};
-
-    //numMythics compared against "magic number" 24 because it's the max possible mythics
-    if (commons.length >= numCommons && uncommons.length >= numUncommons &&
-        (rares.length + mythics.length) >= numRares) {
-
-        //generate and store 24 packs in packarray
-        generate_packs();
-        //8 packs for rotation one,  packs total
-        packrotation(0);
-        packrotation(8);
-        packrotation(16);
-        //display pack 0, remove a card from packs 1-7
-        //remove card from pack, and add card to draftresults
-        //display pack 1, remove cards from 0 and 2-7...
-        //repeat x14
-        //rotation 2
-        //display pack 8, remove a card from packs 9-15...
-        //rotation 3
-        //switch modes
-        //hide draft and spoiler divs
-        //show new divs and buttons
-    }
-    //else collection needs more cards TODO print warning to user
+function display_cards() {
+    display_deck();
+    display_sideboard();
 }
 
 /**
- * TODO
+ * Function: display_pack
+ * Displays the current pack of cards to the user and allows them to select one
+ */
+function display_pack(temppack) {
+    //clear current display
+    $("#draft-results").text("");
+    //re-sort lists
+    temppack.sort();
+    //display each element in sealedresult
+    for (var index in temppack) {
+        let card_id = temppack[index];
+        let card_img = collection[card_id].image_url;
+        let name = collection[card_id].card_name;
+        $("#draft-results").append(`<div class="draft-card" id="${card_id}">
+                <img onclick="draft_cards:choose_from_pack(${card_id}, ${temppack})" src=${card_img} alt=${name}/>
+            </div>`);
+    }
+}
+
+/**
+ * Function: generate_packs
+ * Creates 24 packs of cards from the users collection to be used 
+ * in the draft process. Each pack contains 10 commons, 3 uncommons,
+ * and either one rare or one mythic rare card.
  */
 function generate_packs() {
     packarray = [];
-    
+
     //workaround for javascript not supporting pass by val for arrays
     let tempCommons = commons.slice();
     let tempUncommons = uncommons.slice();
@@ -214,74 +219,8 @@ function generate_packs() {
 }
 
 /**
- * TODO
- * @param {} startindex 
- */
-function packrotation(startindex) {
-    for (let i = 0; i < 14; i++) {
-        let currentpack = (i % 8) + startindex;
-        //choose pack to display
-        display_pack(packarray(currentpack));
-        //remove a card from the other packs
-        for (let j = 0; j < 8; j++) {
-            //if not the current pack, remove random card (bot draft)
-            if (startindex + j != currentpack) {
-                discard_from_pack(packarray(startindex + j));
-            }
-        }
-
-        //TODO pause until user selects a card
-    }
-
-}
-
-//TODO display pack
-/**
- * Function: display_pack
- * Displays the sealedresult and deck displays on the webpage
- */
-function display_pack(temppack) {
-    //clear current display
-    $("#sealed-results").text("");
-    //re-sort lists
-    temppack.sort();
-    //display each element in sealedresult
-    for (var index in temppack) {
-        let card_id = temppack[index];
-        let card_img = collection[card_id].image_url;
-        let name = collection[card_id].card_name;
-        $("#sealed-results").append(`<div class="sealed-card" id="${card_id}">
-                <img onclick="draft_cards:choose_from_pack(${card_id}, ${temppack})" src=${card_img} alt=${name}/>
-            </div>`);
-    }
-}
-
-//TODO choose from pack
-function choose_from_pack(card_id, temppack) {
-    //if card is already in deck, increase its count
-    if (card_id in deck) {
-        deck[card_id] += 1;
-    }
-    /*else, add it as a new keyval pair where the key is the ID 
-    and the value is the count (starting at one)*/
-    else {
-        deck[card_id] = 1;
-    }
-    //remove the card from draftresult
-    for (var index in temppack) {
-        if (temppack[index] == card_id) {
-            temppack.splice(index, 1);
-            break;
-        }
-    }
-    update_export();
-    display_pack(temppack);
-}
-
-//TODO discard from pack
-/**
  * Function: discard_from_pack
- * Chooses a random card in the pack and removes it
+ * Chooses a random card in a pack (passed into the function) and removes it
  * @param {*} temppack the pack from packarray which is to be removed
  */
 function discard_from_pack(temppack) {
@@ -290,9 +229,100 @@ function discard_from_pack(temppack) {
 }
 
 /**
+ * Function: choose_from_pack
+ * Adds a card to the user's draft deck from a pack, simulates players drafting
+ * cards from the other packs in the rotation, then increments the picknumber
+ * 
+ * @param {*} card_id 
+ */
+function choose_from_pack(card_id) {
+    let startindex = 0;
+    //determine which rotation of the draft is active
+    if (picknumber >= 28) {
+        startindex = 16;
+    }
+    else if (picknumber >= 14) {
+        startindex = 8;
+    }
+    //else startindex = 0;
+
+    //derive which pack the user must be on from the picknumber
+    let currentpack = ((picknumber % 14) % 8) + startindex;
+    let temppack = packarray(currentpack);
+
+    //if card is already in deck, increase its count
+    if (card_id in deck) {
+        deck[card_id] += 1;
+    }
+    /*else, add it as a new key-val pair where the key is the ID 
+    and the value is the count (starting at one)*/
+    else {
+        deck[card_id] = 1;
+    }
+    update_export();
+
+    //remove the card from the pack
+    for (var index in temppack) {
+        if (temppack[index] == card_id) {
+            temppack.splice(index, 1);
+            break;
+        }
+    }
+
+    //remove a card from the other packs in that rotation
+    for (let j = 0; j < 8; j++) {
+        //if not the current pack, remove random card (bot draft)
+        if (startindex + j != currentpack) {
+            discard_from_pack(packarray(startindex + j));
+        }
+    }
+
+    //Increase the counter for number of picks taken in the draft
+    picknumber++;
+    if (picknumber >= 42) {
+        //end drafting mode, display updated deck and sideboard
+        display_cards();
+    }
+    else {
+        currentpack = ((picknumber % 14) % 8) + startindex;
+        temppack = packarray(currentpack);
+        //update deck display
+        display_deck();
+        //display next pack in the rotation
+        display_pack(packarray(temppack));
+    }
+}
+
+/**
+ * Function: simulate_draft
+ * Verifies the user's collection is large enough for a draft. If it is, generates
+ * 24 packs of cards from their collection, and begins a fresh draft
+ */
+function simulate_draft() {
+    //reset draft state
+    packarray = [];
+    draftresult = [];
+    deck = {};
+    picknumber = 0;
+
+
+    //numMythics compared against "magic number" 24 because it's the max possible mythics
+    if (commons.length >= numCommons && uncommons.length >= numUncommons &&
+        (rares.length + mythics.length) >= numRares) {
+
+        //generate and store 24 packs in packarray
+        generate_packs();
+        /*display first pack to the user, which allows them to drive the 
+        remainder of the draft*/
+        display_pack(packarray(0));
+    }
+    //else collection needs more cards, TODO polish: print warning to user
+}
+
+/**
  * Function: add_to_deck
- * Takes a card with the given card_id, removes it from draftresult, and adds it to the deck
- * @param {*} card_id the identifier code of the card to be moved from draftresult to deck
+ * Takes a card with the given card_id, removes it from draft sideboard, and adds it to the deck
+ * @param {*} card_id the identifier code of the card to be moved from the sideboard to deck
  */
 function add_to_deck(card_id) {
     //if card is already in deck, increase its count
@@ -317,35 +347,43 @@ function add_to_deck(card_id) {
 
 /**
  * Function: remove_from_deck
- * Takes a card with the given card_id, removes it from the deck, and adds it to draftresult
- * @param {*} card_id the identifier code of the card to be moved from the deck to draftresult
+ * Takes a card with the given card_id, removes it from the deck, and adds it to the sideboard
+ * if the game state is still in drafting mode (picknumber < 42), this function does nothing
+ * @param {*} card_id the identifier code of the card to be moved from the deck to the sideboard
  */
 function remove_from_deck(card_id) {
-    let count = deck[card_id];
-    draftresult.push(card_id);
-    //Remove from deck if one or less (meaning 0 after the card is removed)
-    if (count <= 1) {
-        delete deck[card_id];
+    if (picknumber >= 42) {
+        let count = deck[card_id];
+        draftresult.push(card_id);
+        //Remove from deck if one or less (meaning 0 after the card is removed)
+        if (count <= 1) {
+            delete deck[card_id];
+        }
+        //else decrement count by one
+        else {
+            deck[card_id] = count - 1;
+        }
+        update_export();
+        display_cards();
     }
-    //else decrement count by one
-    else {
-        deck[card_id] = count - 1;
-    }
-    update_export();
-    display_cards();
 }
 
 /**
- * TODO
+ * Function: clear deck
+ * Moves all cards in the deck to the sideboard. Can only be used once the drafting
+ * phase is completed
  */
 function clear_deck() {
-    for (var card_id in deck) {
-        let count = deck[card_id];
-        for (let i = 0; i < count; i++) {
-            draftresult.push(card_id);
+    if (picknumber >= 42) {
+        for (var card_id in deck) {
+            let count = deck[card_id];
+            for (let i = 0; i < count; i++) {
+                draftresult.push(card_id);
+            }
+            delete deck[card_id];
         }
-        delete deck[card_id];
+        update_export();
+        display_cards();
     }
-    update_export();
-    display_cards();
+    //else tried to clear the deck during a draft
 }
