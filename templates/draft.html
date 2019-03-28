@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <title>MtG DraftSim | Draft</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-        <link rel="icon" href="images/favicon.png">
-    </head>
+<head>
+    <title>MtG DraftSim | Draft</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="icon" href="images/favicon.png">
+</head>
 
-    <body>
-        <div id="outerwrapper">
-            <header>
-                 <a href="{{url_for('index')}}"><img src="images/logo.jpg" alt= "Magic the Gathering Logo"></a>
-                <p>Magic the Gathering Sealed and Draft Simulator</p>
-            </header>
-            <nav>
-                <ul>
-                    <li><a href="{{url_for('search', page=1)}}">Build Card Pool</a></li>
-                    <li><a href="{{url_for('sealed')}}">Start Sealed</a></li>
-                </ul>
-            </nav>
-            <main class = "draft_split">
-                <!--populated with buttons via jscript-->
-                <div class="controls">
-                    <a id="export" download="deck.json"><button>Export</button></a>
-                </div>
+<body>
+    <div id="outerwrapper">
+        <header>
+            <a href="{{url_for('index')}}"><img src="images/logo.jpg" alt="Magic the Gathering Logo"></a>
+            <p>Magic the Gathering Sealed and Draft Simulator</p>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{url_for('search', page=1)}}">Build Card Pool</a></li>
+                <li><a href="{{url_for('sealed')}}">Start Sealed</a></li>
+            </ul>
+        </nav>
+        <main class="draft_split">
+            <!--populated with buttons via jscript-->
+            <div class="controls">
+                <a id="export" download="deck.json"><button>Export</button></a>
+            </div>
 
-                <div class="results-container">
-                    <h2>Simulation Results</h2>
-                    <!--Contains the cards in the draft packs/sideboard as images-->
-                    <div id="draft-results"></div>
+            <div class="results-container">
+                <h2>Simulation Results</h2>
+                <!--Contains the cards in the draft packs/sideboard as images-->
+                <div id="draft-results"></div>
+            </div>
+            <div class="picks-container">
+                <h2>Draft Deck</h2>
+                <!--Contains the cards added to the deck as buttons-->
+                <div id="draft-picks">
                 </div>
-                <div class="picks-container">
-                    <h2>Draft Deck</h2>
-                    <!--Contains the cards added to the deck as buttons-->
-                    <div id="draft-picks">
-                    </div>
-                </div>
-            </main>
-            <footer>
-                <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
-            </footer>
-        </div>
-    </body>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='js/draft_cards.js')}}"></script>
+            </div>
+        </main>
+        <footer>
+            <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All
+                rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
+        </footer>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='js/draft_cards.js')}}"></script>
+
 </html>

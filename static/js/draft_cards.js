@@ -153,8 +153,6 @@ function display_cards() {
 function display_pack(temppack) {
     //clear current display
     $("#draft-results").text("");
-    //re-sort lists
-    temppack.sort();
     //display each element in sealedresult
     for (var index in temppack) {
         let card_id = temppack[index];
@@ -249,17 +247,17 @@ function discard_from_pack(temppack) {
 function choose_from_pack(card_id) {
     let startindex = 0;
     //determine which rotation of the draft is active
-    if (picknumber >= 28) {
+    if (picknumber > 27) {
         startindex = 16;
     }
-    else if (picknumber >= 14) {
+    else if (picknumber > 13) {
         startindex = 8;
     }
     //else startindex = 0;
 
     //derive which pack the user must be on from the picknumber
     let currentpack = ((picknumber % 14) % 8) + startindex;
-    let temppack = packarray(currentpack);
+    let temppack = packarray[currentpack];
 
     //if card is already in deck, increase its count
     if (card_id in deck) {
@@ -287,21 +285,30 @@ function choose_from_pack(card_id) {
     for (let j = 0; j < 8; j++) {
         //if not the current pack, remove random card (bot draft)
         if (startindex + j != currentpack) {
-            discard_from_pack(packarray(startindex + j));
+            discard_from_pack(packarray[startindex + j]);
         }
     }
 
-    //Increase the counter for number of picks taken in the draft
+    //Increase the counter for number of picks taken in the draft, update rotation if needed
     picknumber++;
-    if (picknumber >= 42) {
+    //determine which rotation of the draft is active
+    if (picknumber > 27) {
+        startindex = 16;
+    }
+    else if (picknumber > 13) {
+        startindex = 8;
+    }
+    //else startindex = 0;
+    
+    if (picknumber > 41) {
         //end drafting mode, display updated deck and sideboard
         display_cards();
     }
     else {
         currentpack = ((picknumber % 14) % 8) + startindex;
-        temppack = packarray(currentpack);
+        temppack = packarray[currentpack];
         //display next pack in the rotation
-        display_pack(packarray(temppack));
+        display_pack(temppack);
     }
 }
 
@@ -328,7 +335,7 @@ function simulate_draft() {
         generate_packs();
         /*display first pack to the user, which allows them to drive the 
         remainder of the draft*/
-        display_pack(packarray(0));
+        display_pack(packarray[0]);
     }
     //else collection needs more cards, TODO polish: print warning to user
 }
@@ -366,7 +373,7 @@ function add_to_deck(card_id) {
  * @param {*} card_id the identifier code of the card to be moved from the deck to the sideboard
  */
 function remove_from_deck(card_id) {
-    if (picknumber >= 42) {
+    if (picknumber > 41) {
         let count = deck[card_id];
         draftresult.push(card_id);
         //Remove from deck if one or less (meaning 0 after the card is removed)
@@ -389,7 +396,7 @@ function remove_from_deck(card_id) {
  * phase is completed
  */
 function clear_deck() {
-    if (picknumber >= 42) {
+    if (picknumber > 41) {
         for (var card_id in deck) {
             let count = deck[card_id];
             for (let i = 0; i < count; i++) {
