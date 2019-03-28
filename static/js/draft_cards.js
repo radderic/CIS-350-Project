@@ -1,8 +1,11 @@
 "use strict";
 //all cards
 var collection;
+//stores the 24 packs used during the draft process
 var packarray = [];
+//contains the cards the user puts into their sideboard after the draft
 var draftresult = [];
+//contains cards the user chose during their draft (and haven't moved to the sideboard)
 var deck = {};
 
 var commons = [];
@@ -96,6 +99,10 @@ $.ajax({
         }
     });
 
+/**
+ * Function: display_deck
+ * Shows the card names/counts of cards the user has selected during the draft in a deck spoiler
+ */
 function display_deck() {
     //clear current display
     $("#draft-picks").text("");
@@ -110,6 +117,10 @@ function display_deck() {
     }
 }
 
+/**
+ * Function: display_sideboard
+ * Shows cards the user has removed from their deck post-draft in the main area as images
+ */
 function display_sideboard() {
     //clear current display
     $("#draft-results").text("");
@@ -259,6 +270,9 @@ function choose_from_pack(card_id) {
     else {
         deck[card_id] = 1;
     }
+
+    //update deck display
+    display_deck();
     update_export();
 
     //remove the card from the pack
@@ -286,8 +300,6 @@ function choose_from_pack(card_id) {
     else {
         currentpack = ((picknumber % 14) % 8) + startindex;
         temppack = packarray(currentpack);
-        //update deck display
-        display_deck();
         //display next pack in the rotation
         display_pack(packarray(temppack));
     }
@@ -304,6 +316,8 @@ function simulate_draft() {
     draftresult = [];
     deck = {};
     picknumber = 0;
+    $("#draft-results").text("");
+    $("#draft-picks").text("");
 
 
     //numMythics compared against "magic number" 24 because it's the max possible mythics
@@ -366,6 +380,7 @@ function remove_from_deck(card_id) {
         update_export();
         display_cards();
     }
+    //else draft still in progress, cannot remove cards from deck
 }
 
 /**
