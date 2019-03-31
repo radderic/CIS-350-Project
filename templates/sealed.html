@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <title>MtG DraftSim | Sealed</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-        <link rel="icon" href="/static/images/favicon.png">
-    </head>
+<head>
+    <title>MtG DraftSim | Sealed</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="icon" href="/static/images/favicon.png">
+</head>
 
-    <body>
-        <div id="outerwrapper">
-            <header>
-                <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='images/logo.png')}}" alt= "Magic the Gathering Logo"></a>
-                <p>Magic the Gathering Sealed and Draft Simulator</p>
-            </header>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{{url_for('search', page=1)}}">Build Card Pool</a></li>
-                    <li><a href="{{url_for('draft')}}">Start Draft</a></li>
-                </ul>
-            </nav>
-            <main class="sealed-split">
-                <!--populated with buttons via jscript-->
-                <div class="controls">
-                    <a id="export" download="deck.json"><button>Export</button></a>
+<body>
+    <div id="outerwrapper">
+        <header>
+            <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='images/logo.png')}}"
+                    alt="Magic the Gathering Logo"></a>
+            <p>Magic the Gathering Sealed and Draft Simulator</p>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{url_for('search', page=1)}}">Build Card Pool</a></li>
+                <li><a href="{{url_for('draft')}}">Start Draft</a></li>
+            </ul>
+        </nav>
+        <main class="sealed-split">
+            <!--populated with buttons via jscript-->
+            <div class="controls">
+                <a id="export" download="deck.json"><button>Export</button></a>
+            </div>
+            <div class="results-container">
+                <h2>Simulation Results</h2>
+                <!--Contains the cards in the sealed result as images-->
+                <div id="sealed-results"></div>
+            </div>
+            <div class="picks-container">
+                <h2>Draft Deck</h2>
+                <!--Contains the cards added to the deck as buttons-->
+                <div id="sealed-picks">
                 </div>
-                <div class="results-container">
-                    <h2>Simulation Results</h2>
-                    <!--Contains the cards in the sealed result as images-->
-                    <div id="sealed-results"></div>
-                </div>
-                <div class="picks-container">
-                    <h2>Draft Deck</h2>
-                    <!--Contains the cards added to the deck as buttons-->
-                    <div id="sealed-picks">
-                    </div>
-                </div>
-            </main>
-            <footer>
-                <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
-            </footer>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script src="{{url_for('static', filename='js/sort_cards.js')}}"></script>
-    </body>
+            </div>
+        </main>
+        <footer>
+            <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All
+                rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/sort_cards.js')}}"></script>
+</body>
+
 </html>

@@ -2,8 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Hammersmith+One');
 
 * {
-    /*margin: 0;*/
-    /*padding: 0;*/
     box-sizing: border-box;
 }
 
@@ -61,8 +59,10 @@ nav li a{
     text-decoration: none; 
 }
 
-/*background color for body*/
-body{background-color: #5f5f5f;}
+/*background color for the body*/
+body {
+    background-color: #222222;
+}
 
 /*width for outerwrapper*/
 #outerwrapper{
@@ -73,7 +73,6 @@ body{background-color: #5f5f5f;}
 
 /*main background color, padding, and border properties*/
 main{
-    background-color: #1f1d20; 
     padding: 0.5em;
     display: flex;
     flex-wrap: wrap;
@@ -88,13 +87,13 @@ h1, h2, h3, p, label{
 
 /*footer background color, text-alignment, and padding*/
 footer{
+    clear: both;
     text-align: center; 
     padding-top: 2em;
 }
 
 /*color and font size for p elements in footer*/
 footer p{
-    color: #ffffff; 
     font-size: 0.7em;
 }
 
@@ -191,16 +190,14 @@ button:hover{
     display: none;
 }
 
-.sealed-split {
+.sealed-split, .draft-split {
     display: flex;
     justify-content: flex-start;
 }
 
 .controls{
     width: 100%;
-    margin-bottom: 1em;
-    background-color: #5f5f5f;
-    border-width: .5em;
+    border-width: 2px;
     border-color: #ffffff;
     border-bottom-style: solid;
     justify-content: space-evenly;
@@ -208,7 +205,7 @@ button:hover{
 .controls button{
     justify-content: space-evenly;
     margin: .3em .5em;
-    font-size: 180%;
+    font-size: 140%;
 }
 
 #draft-deck > p, #sealed-deck > p {
@@ -228,20 +225,21 @@ button:hover{
 }
 
 /*Styles the card images for sealed to be buttons*/
-.sealed-card {
+.sealed-card, .draft-card {
     padding: 0.5em;
     display: inline-flex;
     clear: both;
     justify-content: space-around;
 }
 
-/*Styles the container holding the deck for Sealed format*/
+/*Styles the container holding the deck spoiler*/
 .picks-container {
+    top: 0;
+    position: sticky;
     overflow-y: auto;
     max-height: 800px;
     width: 29%;
     margin-right: .2em;
-    border-right: 2px solid white;
 }
 
 /*background color for deck-card doesn't seem to be working - TODO Fix*/
@@ -265,10 +263,6 @@ button:hover{
 
 /*media query for tablet viewport targets screens with a min width of 669px*/
 @media only screen and (min-width: 669px) {
-    /*Resets the float for the footer*/
-    footer {		
-        clear: both;
-    }
     
     /*formats the navigation items to display in rows*/
     nav li {
@@ -302,7 +296,6 @@ button:hover{
     header img {
         margin-top: 3em; 
         margin-left: 1em;
-        float: left;
     }
     
     /*increases size for p element in header*/
@@ -318,9 +311,9 @@ button:hover{
 /*media query for desktop viewport targets screens with a min width of 976px*/
 @media only screen and (min-width: 976px){
     
-    /*changes max width to 90% of the screen*/
+    /*changes max width to 95% of the screen*/
     #outerwrapper{
-        width: 90%;
+        width: 95%;
     }
     
     /*header height, font size and text alignment*/
@@ -334,21 +327,10 @@ button:hover{
         clear:both;
         margin: 0 1em 0 1em;
         padding: 1.05em;
-        border-radius: 0.5em;
-        border: 2px solid #ffffff;
+        border-style: solid 1px;
+        border-radius: 2px;
+        border-color: #292929;
     }
-	
-    /*displays the images related to the items on infopages*/
-    article section figure{
-        float: right;
-        max-width: 25%;
-        margin: .5%;
-    }
-    
-    /*moves footer below floated content*/
-    footer{		
-		clear:both;
-	}
 
 	/*border radius for form*/
 	form{

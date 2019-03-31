@@ -1,11 +1,91 @@
+/*web based font*/
+@import url('https://fonts.googleapis.com/css?family=Hammersmith+One');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    font-size: 62.5%;
+/*background styles and text alignment for header*/
+header{
+    background: #000000;
+    color: #ffffff;
+    font-size: 1.4em; 
+    text-align: center;
+    font-family: "Hammersmith One", "Times New Roman", serif;
+    font-weight: bold;
+    text-shadow: 3px 3px 8px #000000;
+    padding: 1em;
+}
+
+header p{
+    font-size: 1.75em;
+}
+
+/*removes underline from link in header*/
+header a{text-decoration:none;}
+
+/*styles logo*/
+header img{
+    float: left;
+    height: auto; 
+    max-width: 100px;
+    margin-top: 3em; 
+    margin-left: 1em;
+    background-color: #000000;
+}
+
+/*text properties and clear for nav*/
+nav{
+    font-family: "Century Gothic", Arial, sans-serif;
+    font-size: 1.3em;
+    text-align: right;
+    border-radius: 0;
+    clear: both;
+}
+
+/*text padding and margins for nav*/
+nav ul{
+    padding: 0; 
+    margin-top: 0.5em; 
+    margin-bottom: 0.5em; 
+    overflow: hidden;
+}
+
+/*background color, rounded corners, remove bullet style, and apply margin and padding for list of items in nav*/
+nav li{
+    display: inline-block;
+    list-style-type: none; 
+    background-color: #000000;
+    margin: 0.2em;
+    padding: 0.2em;
+}
+
+/*removes underline and changes nav link text color to white*/
+nav li a{
+    text-decoration: none; 
+}
+
+/*pseudo-classes for nav link colors*/
+nav li:hover{background-color: #2f3c42;}
+
+nav li a:link{color: #ffffff;}
+
+nav li a:hover{color: #72f766;}
+
+nav li a:visited{color: #ffffff;}
+
+/*background color for the body*/
+body {
+    background-color: #222222;
+}
+
+/*width for outerwrapper*/
+#outerwrapper{
+    width: 100%; 
+    margin-left: auto; 
+    margin-right: auto;
 }
 
 body {
@@ -58,11 +138,13 @@ body {
 
 main {
     padding: 2rem 2rem 0 2rem;
+    font-size: 62.5%;
 }
 
 .results-container {
     max-width: 65%;
     margin: 2rem 0;
+    font-size: 62.5%;
 }
 
 .cards-container {
@@ -70,6 +152,7 @@ main {
     flex-wrap: wrap;
     clear: both;
     justify-content: space-around;
+    font-size: 62.5%;
 }
 
 .card {
@@ -83,16 +166,17 @@ main {
     justify-content: space-between;
 }
 
-.collection {
+#collection {
     top: 0;
     position: sticky;
     min-width: 40rem;
     width: 25%;
     background-color: #151515;
     padding: 2rem;
+    font-size: 62.5%;
 }
 
-.collection > h3 {
+#collection > h3 {
     font-size: 3rem;
     margin: 0 0 1rem 0;
     border-bottom: 1px solid grey;
@@ -111,10 +195,6 @@ main {
 
 .card-infobox {
     display: none;
-}
-
-.card-image {
-    width: 20rem;
 }
 
 .collection-card > p {
@@ -167,7 +247,7 @@ main {
 
 .page-links {
     padding: 2rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .page-control {
