@@ -11,8 +11,9 @@ The backend for running a Magic the Gathering server which fetches Magic card in
         - routing to additional html pages as needed
 """
 
-from json import dumps
-from flask import Flask, render_template, request, session, jsonify, abort
+from json import dumps, loads
+from json.decoder import JSONDecodeError
+from flask import Flask, render_template, request, session, jsonify, abort, redirect, url_for, flash
 from mtgsdk import Card, Set
 from mtgsdk.restclient import MtgException
 from utils.magic_card import MagicCard
@@ -223,13 +224,36 @@ def draft():
     """
     return render_template('draft.html')
 
+@app.route('/import', methods=['POST'])
+def import_deck():
+    """
+    Reads and validates JSON file recieved from user.
+
+    Upon successful read, the session data card_pool is set to the read data
+    """
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file selected')
+            return redirect(url_for('search', page=1))
+        json_file = request.files['file']
+        if json_file.filename == '':
+            flash('Failed to find filename')
+            return redirect(url_for('search', page=1))
+        try:
+            session['card_pool'] = loads(json_file.read())
+        except JSONDecodeError:
+            flash('Invalid JSON')
+            return redirect(url_for('search', page=1))
+    return redirect(url_for('search', page=1))
+
 #@app.route('/invalid')
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(error):
     """
     If the user manages to go to an impossible page it returns a blank page
         with the message 404: Page not found
     """
+    print(error)
     return render_template('404.html'), 404
 
 if __name__ == '__main__':

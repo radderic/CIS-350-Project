@@ -66,10 +66,12 @@ function add_buttons() {
 function update_export() {
     let deckJson = {};
     let deckLength = Object.keys(deck).length;
+    deckJson["count"] = 0;
     if (deckLength > 0) {
         for (let id in deck) {
             deckJson[id] = collection[id];
             deckJson[id]["count"] = deck[id];
+            deckJson["count"] += deckJson[id]["count"];
         }
     }
     let base64_deck = btoa(JSON.stringify(deckJson, null, 1));

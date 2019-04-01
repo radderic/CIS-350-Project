@@ -19,6 +19,7 @@ $.ajax({
     }
     else {
         display_cards(data.success);
+        count_rarity();
     }
 });
 
@@ -41,6 +42,7 @@ $(".add-card").on("click", function(event) {
         }
         else {
             display_cards(data.success);
+            count_rarity();
         }
     });
     event.preventDefault();
@@ -68,6 +70,7 @@ $("#clear-deck").on("click", function(event) {
             $("#draft-deck").text("");
             let total = collection.count;
             $(".total-cards").text(`Total cards: ${total}`);
+            count_rarity();
         }
     });
     event.preventDefault();
@@ -94,6 +97,7 @@ function reload_buttons() {
             }
             else {
                 display_cards(data.success);
+                count_rarity();
             }
         });
         event.preventDefault();
@@ -112,11 +116,11 @@ function reload_buttons() {
             }
             else {
                 display_cards(data.success);
+                count_rarity();
             }
         });
         event.preventDefault();
     });
-
 }
 
 /**
@@ -142,4 +146,46 @@ function display_cards(data) {
     }
     reload_buttons();
 }
+
+
+/**
+ * Function: Count Rarity
+ * Takes the entire collection (draft pool of cards) and counts each card for rarity.
+ *
+ */
+function count_rarity() {
+    let numCommons = 0;
+    let numUncommons = 0;
+    let numRares = 0;
+    let numMythics = 0;
+    for (var card in collection) {
+        if (card !== "count") {
+            let count = collection[card].count;
+            for (var i = 0; i < count; i++) {
+                if (collection[card].rarity === "Common") {
+                    numCommons++;
+                } else if (collection[card].rarity === "Uncommon") {
+                    numUncommons++;
+                } else if (collection[card].rarity === "Rare") {
+                    numRares++;
+                } else if (collection[card].rarity === "Mythic") {
+                    numMythics++;
+                }
+            }
+        }
+    }
+    $("#common-count").text(`${numCommons}`);
+    $("#uncommon-count").text(`${numUncommons}`);
+    $("#rare-count").text(`${numRares}`);
+    $("#mythic-count").text(`${numMythics}`);
+}
+
+
+$("#close-import").on("click", function(event) {
+    $("#import-overlay").hide();
+});
+
+$("#import-deck").on("click", function(event) {
+    $("#import-overlay").show();
+});
 

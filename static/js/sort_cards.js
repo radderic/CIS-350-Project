@@ -51,14 +51,17 @@ function add_buttons(){
  * Updates the value to be used by the export button
  */
 function update_export() {
-    let deckJson = {}; 
+    let deckJson = {};
     let deckLength = Object.keys(deck).length;
+    deckJson["count"] = 0;
     if(deckLength > 0) {
         for(let id in deck) {
             deckJson[id] = collection[id];
             deckJson[id]["count"] = deck[id];
+            deckJson["count"] += deckJson[id]["count"];
         }
     }
+
     let base64_deck = btoa(JSON.stringify(deckJson, null, 1));
     $("#export").attr("href", "data:application/octet-stream;charset=utf-16le;base64," + base64_deck);
 }
