@@ -20,6 +20,7 @@ $.ajax({
     else {
         display_cards(data.success);
         count_rarity();
+        update_export();
     }
 });
 
@@ -43,6 +44,7 @@ $(".add-card").on("click", function(event) {
         else {
             display_cards(data.success);
             count_rarity();
+            update_export();
         }
     });
     event.preventDefault();
@@ -71,6 +73,7 @@ $("#clear-deck").on("click", function(event) {
             let total = collection.count;
             $(".total-cards").text(`Total cards: ${total}`);
             count_rarity();
+            update_export();
         }
     });
     event.preventDefault();
@@ -98,6 +101,7 @@ function reload_buttons() {
             else {
                 display_cards(data.success);
                 count_rarity();
+                update_export();
             }
         });
         event.preventDefault();
@@ -117,6 +121,7 @@ function reload_buttons() {
             else {
                 display_cards(data.success);
                 count_rarity();
+                update_export();
             }
         });
         event.preventDefault();
@@ -188,4 +193,15 @@ $("#close-import").on("click", function(event) {
 $("#import-deck").on("click", function(event) {
     $("#import-overlay").show();
 });
+
+/**
+ * Function: update_export
+ * Updates the value to be used by the export button
+ */
+function update_export() {
+    let base64_deck = btoa(JSON.stringify(collection, null, 1));
+    $("#export-deck").attr("href", "data:application/octet-stream;charset=utf-16le;base64," + base64_deck);
+}
+
+
 
