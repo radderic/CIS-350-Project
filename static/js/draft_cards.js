@@ -301,14 +301,18 @@ function choose_from_pack(card_id) {
         startindex = 8;
     }
     //else startindex = 0;
-    
+
+    //Decide if draft is finished or if another pack should be displayed
     if (picknumber > 41) {
         //end drafting mode, display updated deck and sideboard
+        $("#draft-progress").text("Sideboard | Draft complete");
         display_cards();
     }
     else {
         currentpack = ((picknumber % 14) % 8) + startindex;
         temppack = packarray[currentpack];
+        //update text for the user
+        $("#draft-progress").text("Pick: " + (picknumber + 1) + " | Pack " + (currentpack + 1) + " | Rotation: " + Math.floor((currentpack / 8) + 1));
         //display next pack in the rotation
         display_pack(temppack);
     }
@@ -320,18 +324,18 @@ function choose_from_pack(card_id) {
  * 24 packs of cards from their collection, and begins a fresh draft
  */
 function simulate_draft() {
-    //reset draft state
-    packarray = [];
-    draftresult = [];
-    deck = {};
-    picknumber = 0;
-    $("#draft-results").text("");
-    $("#draft-picks").text("");
-
 
     //numMythics compared against "magic number" 24 because it's the max possible mythics
     if (commons.length >= numCommons && uncommons.length >= numUncommons &&
         (rares.length + mythics.length) >= numRares) {
+        //reset draft state
+        packarray = [];
+        draftresult = [];
+        deck = {};
+        picknumber = 0;
+        $("#draft-results").text("");
+        $("#draft-picks").text("");
+        $("#draft-progress").text("Pick: 1 | Pack 1 | Rotation: 1");
 
         //generate and store 24 packs in packarray
         generate_packs();
