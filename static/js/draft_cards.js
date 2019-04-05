@@ -212,13 +212,20 @@ function generate_packs() {
                     temppack.push(tempMythics[tempIndex]);
                     tempMythics.splice(tempIndex, 1);
                 }
+                //else we have no mythic, substitute a rare
+                else {
+                    let tempIndex = Math.floor(Math.random() * tempRares.length);
+                    temppack.push(tempRares[tempIndex]);
+                    tempRares.splice(tempIndex, 1);
+                }
             }
+            //else if we didn't roll a mythic and have rares remaining
             else if (tempRares.length > 0) {
                 let tempIndex = Math.floor(Math.random() * tempRares.length);
                 temppack.push(tempRares[tempIndex]);
                 tempRares.splice(tempIndex, 1);
             }
-            // we must have run out of rares, use mythics
+            // else we didn't roll a mythic, but are substituting one in because we're out of rares
             else {
                 let tempIndex = Math.floor(Math.random() * tempMythics.length);
                 temppack.push(tempMythics[tempIndex]);

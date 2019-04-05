@@ -167,6 +167,12 @@ function simulate_sealed () {
                     sealedresult.push(tempMythics[tempIndex]);
                     tempMythics.splice(tempIndex,1);
                 }
+                //else we have no mythic, substitute a rare
+                else {
+                    let tempIndex = Math.floor(Math.random() * tempRares.length);
+                    sealedresult.push(tempRares[tempIndex]);
+                    tempRares.splice(tempIndex, 1);
+                }
             }
             else if(tempRares.length > 0) {
                 let tempIndex = Math.floor(Math.random() * tempRares.length);
