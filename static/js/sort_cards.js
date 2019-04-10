@@ -12,7 +12,7 @@ var mythics = [];
 /**
  * Function: Sort Rarity
  * Takes the entire collection (draft pool of cards) and breaks it down into arrays by rarity.
- * 
+ *
  * @param {*} collection The array of cards to be included in the draft pool
  */
 function sort_rarity(collection) {
@@ -188,7 +188,10 @@ function simulate_sealed () {
         }
         display_cards();
     }
-    //else collection needs more cards TODO print warning to user
+    //else collection needs more cards
+    else{
+        $("#sealed-results").text("Insufficient cards in your collection. Needs: 60 Commons, 18 Uncommons, and 6 Rares/Mythics.");
+    }
 }
 
 /**
@@ -201,7 +204,7 @@ function add_to_deck(card_id){
     if(card_id in deck){
         deck[card_id] += 1;
     }
-    /*else, add it as a new keyval pair where the key is the ID 
+    /*else, add it as a new keyval pair where the key is the ID
     and the value is the count (starting at one)*/
     else{
         deck[card_id] = 1;
@@ -228,7 +231,7 @@ function remove_from_deck(card_id){
     //Remove from deck if one or less (meaning 0 after the card is removed)
     if(count <= 1){
         delete deck[card_id];
-    } 
+    }
     //else decrement count by one
     else {
         deck[card_id] = count - 1;

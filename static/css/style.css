@@ -149,6 +149,9 @@ button:hover{
     max-width: 55%;
     margin: 2em 0;
 }
+#sealed-results, #draft-results {
+    color: #ffffff;
+}
 
 /*styles and floats collection in collection viewing pages*/
 #collection {

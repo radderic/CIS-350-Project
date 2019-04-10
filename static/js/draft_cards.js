@@ -168,7 +168,7 @@ function display_pack(temppack) {
 
 /**
  * Function: generate_packs
- * Creates 24 packs of cards from the users collection to be used 
+ * Creates 24 packs of cards from the users collection to be used
  * in the draft process. Each pack contains 10 commons, 3 uncommons,
  * and either one rare or one mythic rare card.
  */
@@ -250,8 +250,8 @@ function discard_from_pack(temppack) {
  * Function: choose_from_pack
  * Adds a card to the user's draft deck from a pack, simulates players drafting
  * cards from the other packs in the rotation, then increments the picknumber
- * 
- * @param {*} card_id 
+ *
+ * @param {*} card_id
  */
 function choose_from_pack(card_id) {
     let startindex = 0;
@@ -272,8 +272,8 @@ function choose_from_pack(card_id) {
     if (card_id in deck) {
         deck[card_id] += 1;
     }
-    /*else, add it as a new key-val pair where the key is the ID 
-    and the value is the count (starting at one)*/
+    /* else, add it as a new key-val pair where the key is the ID
+    and the value is the count (starting at one) */
     else {
         deck[card_id] = 1;
     }
@@ -346,11 +346,14 @@ function simulate_draft() {
 
         //generate and store 24 packs in packarray
         generate_packs();
-        /*display first pack to the user, which allows them to drive the 
-        remainder of the draft*/
+        /* display first pack to the user, which allows them to drive the
+        remainder of the draft */
         display_pack(packarray[0]);
     }
-    //else collection needs more cards, TODO polish: print warning to user
+    //else collection needs more cards
+    else{
+       $("#draft-results").text("Insufficient cards in your collection. Needs: 240 Commons, 72 Uncommons, 24 Rares/Mythics.");
+    }
 }
 
 /**
@@ -363,7 +366,7 @@ function add_to_deck(card_id) {
     if (card_id in deck) {
         deck[card_id] += 1;
     }
-    /*else, add it as a new keyval pair where the key is the ID 
+    /*else, add it as a new keyval pair where the key is the ID
     and the value is the count (starting at one)*/
     else {
         deck[card_id] = 1;
