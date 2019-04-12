@@ -408,8 +408,7 @@ function remove_from_deck(card_id) {
 
 /**
  * Function: clear deck
- * Moves all cards in the deck to the sideboard. Can only be used once the drafting
- * phase is completed
+ * Moves all cards in the deck to the sideboard. Can only be used once the drafting phase is completed
  */
 function clear_deck() {
     if (picknumber > 41) {
