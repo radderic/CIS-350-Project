@@ -190,6 +190,227 @@
     
 
     
+    <h4 class="name" id="add_buttons"><span class="type-signature"></span>add_buttons<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: add_buttonsPopulates the controls div of draft.html with buttons embedded with javascript functions
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="add_to_deck"><span class="type-signature"></span>add_to_deck<span class="signature">(card_id)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: add_to_deckTakes a card with the given card_id, removes it from draft sideboard, and adds it to the deck
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>card_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the identifier code of the card to be moved from the sideboard to deck</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line364">line 364</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="add_to_deck"><span class="type-signature"></span>add_to_deck<span class="signature">(card_id)</span><span class="type-signature"></span></h4>
     
 
@@ -291,7 +512,793 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line190">line 190</a>
+        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line202">line 202</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="choose_from_pack"><span class="type-signature"></span>choose_from_pack<span class="signature">(card_id)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: choose_from_packAdds a card to the user's draft deck from a pack, simulates players draftingcards from the other packs in the rotation, then increments the picknumber
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>card_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line256">line 256</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="clear_deck"><span class="type-signature"></span>clear_deck<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: clear deckMoves all cards in the deck to the sideboard. Can only be used once the draftingphase is completed
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line414">line 414</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="clear_deck"><span class="type-signature"></span>clear_deck<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: clear deckMoves all cards in the deck to the sealedresult
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line248">line 248</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="count_rarity"><span class="type-signature"></span>count_rarity<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: Count RarityTakes the entire collection (draft pool of cards) and counts each card for rarity.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line202">line 202</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="count_rarity"><span class="type-signature"></span>count_rarity<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: Count RarityTakes the entire collection (draft pool of cards) and counts each card for rarity.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="discard_from_pack"><span class="type-signature"></span>discard_from_pack<span class="signature">(temppack)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: discard_from_packChooses a random card in a pack (passed into the function) and removes it
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>temppack</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pack from packarray which is to be removed</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line244">line 244</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="display_cards"><span class="type-signature"></span>display_cards<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: display_cardsDisplays the sealedresult and deck displays on the webpage
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line96">line 96</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="display_cards"><span class="type-signature"></span>display_cards<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: display_cardsDisplays the draftresult (sideboard) and deck to the webpage
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -426,7 +1433,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line127">line 127</a>
+        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -460,7 +1467,7 @@
     
 
     
-    <h4 class="name" id="display_cards"><span class="type-signature"></span>display_cards<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="display_deck"><span class="type-signature"></span>display_deck<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -468,7 +1475,7 @@
 
 
 <div class="description">
-    Function: display_cardsDisplays the sealedresult and deck displays on the webpage
+    Function: display_deckShows the card names/counts of cards the user has selected during the draft in a deck spoiler
 </div>
 
 
@@ -512,7 +1519,265 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line93">line 93</a>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line108">line 108</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="display_pack"><span class="type-signature"></span>display_pack<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: display_packDisplays the current pack of cards to the user and allows them to select one
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line155">line 155</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="display_sideboard"><span class="type-signature"></span>display_sideboard<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: display_sideboardShows cards the user has removed from their deck post-draft in the main area as images
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line126">line 126</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="generate_packs"><span class="type-signature"></span>generate_packs<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: generate_packsCreates 24 packs of cards from the users collection to be usedin the draft process. Each pack contains 10 commons, 3 uncommons,and either one rare or one mythic rare card.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line175">line 175</a>
     </li></ul></dd>
     
 
@@ -598,7 +1863,228 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line82">line 82</a>
+        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line235">line 235</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="reload_buttons"><span class="type-signature"></span>reload_buttons<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: reload_buttonsEach button is dynamically added to the page, thus they needto remove the event listener and re-add it, hence reload.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line76">line 76</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="remove_from_deck"><span class="type-signature"></span>remove_from_deck<span class="signature">(card_id)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: remove_from_deckTakes a card with the given card_id, removes it from the deck, and adds it to the sideboardif the game state is still in drafting mode (picknumber < 42), this function does nothing
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>card_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the identifier code of the card to be moved from the deck to the sideboard</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line391">line 391</a>
     </li></ul></dd>
     
 
@@ -733,7 +2219,93 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line216">line 216</a>
+        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line228">line 228</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="simulate_draft"><span class="type-signature"></span>simulate_draft<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: simulate_draftVerifies the user's collection is large enough for a draft. If it is, generates24 packs of cards from their collection, and begins a fresh draft
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line333">line 333</a>
     </li></ul></dd>
     
 
@@ -819,7 +2391,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line123">line 123</a>
+        <a href="sort_cards.js.html">sort_cards.js</a>, <a href="sort_cards.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -988,6 +2560,227 @@
     
 
     
+    <h4 class="name" id="sort_rarity"><span class="type-signature"></span>sort_rarity<span class="signature">(collection)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: Sort RarityTakes the entire collection (draft pool of cards) and breaks it down into arrays by rarity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>collection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The array of cards to be included in the draft pool</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update_export"><span class="type-signature"></span>update_export<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: update_exportUpdates the value to be used by the export button
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="draft_cards.js.html">draft_cards.js</a>, <a href="draft_cards.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="update_export"><span class="type-signature"></span>update_export<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -1069,6 +2862,92 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="update_export"><span class="type-signature"></span>update_export<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function: update_exportUpdates the value to be used by the export button
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ajax.js.html">ajax.js</a>, <a href="ajax.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -1084,13 +2963,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_buttons">add_buttons</a></li><li><a href="global.html#add_to_deck">add_to_deck</a></li><li><a href="global.html#display_cards">display_cards</a></li><li><a href="global.html#reload_buttons">reload_buttons</a></li><li><a href="global.html#remove_from_deck">remove_from_deck</a></li><li><a href="global.html#simulate_sealed">simulate_sealed</a></li><li><a href="global.html#sort_rarity">sort_rarity</a></li><li><a href="global.html#update_export">update_export</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_buttons">add_buttons</a></li><li><a href="global.html#add_to_deck">add_to_deck</a></li><li><a href="global.html#choose_from_pack">choose_from_pack</a></li><li><a href="global.html#clear_deck">clear_deck</a></li><li><a href="global.html#count_rarity">count_rarity</a></li><li><a href="global.html#discard_from_pack">discard_from_pack</a></li><li><a href="global.html#display_cards">display_cards</a></li><li><a href="global.html#display_deck">display_deck</a></li><li><a href="global.html#display_pack">display_pack</a></li><li><a href="global.html#display_sideboard">display_sideboard</a></li><li><a href="global.html#generate_packs">generate_packs</a></li><li><a href="global.html#reload_buttons">reload_buttons</a></li><li><a href="global.html#remove_from_deck">remove_from_deck</a></li><li><a href="global.html#simulate_draft">simulate_draft</a></li><li><a href="global.html#simulate_sealed">simulate_sealed</a></li><li><a href="global.html#sort_rarity">sort_rarity</a></li><li><a href="global.html#update_export">update_export</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Feb 25 2019 16:14:34 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Apr 12 2019 12:07:01 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
