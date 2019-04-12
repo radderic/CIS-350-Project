@@ -240,6 +240,11 @@ function remove_from_deck(card_id){
     display_cards();
 }
 
+
+/**
+ * Function: clear deck
+ * Moves all cards in the deck to the sealedresult
+ */
 function clear_deck(){
     for(var card_id in deck){
         let count = deck[card_id];
