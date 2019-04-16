@@ -26,7 +26,7 @@
         <main class="draft_split">
             <!--populated with buttons via jscript-->
             <div class="controls">
-                <a id="export" download="deck.json"><button>Export</button></a>
+                <a href="" id="export" download="deck.json"><button>Export</button></a>
             </div>
 
             <div class="results-container">
@@ -45,10 +45,10 @@
             <p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All
                 rights reserved. DraftSim is a fan-made site and has no affiliation with WotC or Hasbro.</p>
         </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="{{url_for('static', filename='js/draft_cards.js')}}"></script>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="{{url_for('static', filename='js/draft_cards.js')}}"></script>
 
 </html>
