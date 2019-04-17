@@ -22,22 +22,6 @@ class MagicCard(object):
 
         self.count = 1
 
-    #potential feature for next release
-    def to_json(self):
-        return dumps({
-            self.multiverse_id: {
-                "card_name": self.name,
-                "image_url": self.image_url,
-                "colors": self.colors,
-                "type": self.type,
-                "rarity": self.rarity,
-                "set": self.set,
-                "double-sided": self.double_sided,
-                "other-side": self.other_side,
-                "count": self.count,
-            }
-        })
-
     def to_dict(self):
         return {
             self.multiverse_id: {

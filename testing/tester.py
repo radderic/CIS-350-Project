@@ -4,6 +4,7 @@
 """
 import unittest
 from app import app
+import io
 
 class TestWebsite(unittest.TestCase):
     """
@@ -29,6 +30,9 @@ class TestWebsite(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         result = self.app.get('/sealed')
         self.assertEqual(result.status_code, 200)
+        result = self.app.get('/draft')
+        self.assertEqual(result.status_code, 200)
+
 
     def test_invalid_pages(self):
         """
@@ -210,6 +214,17 @@ class TestWebsite(unittest.TestCase):
         result = self.post_fetch()
         self.assertEqual(result.status_code, 200)
 
+    def test_import(self):
+        filename = './testing/sample_inputs/deck.json'
+        result = self.post_file(filename)
+        self.assertEqual(result.status_code, 200);
+        filename = './testing/sample_inputs/invalid.json'
+        result = self.post_file(filename)
+        self.assertEqual(result.status_code, 200);
+        result = self.post_nameless_file(filename)
+        self.assertEqual(result.status_code, 200);
+
+
     def post_add(self, card_id):
         """
         Simulates a POST request to add a card from the client
@@ -234,9 +249,17 @@ class TestWebsite(unittest.TestCase):
         """
         return self.app.post('/fetch', data=dict(fetch='fetch'), follow_redirects=True)
 
-    def post_file(self, f):
-        f = open('deck.json', 'r')
-        return self.app.post('/import_deck', data=dict(file=f), follow_redirects=True)
+    def post_file(self, filename):
+        data = {}
+        f = open(filename, 'r')
+        data['file'] = (io.BytesIO(bytes(f.read(), encoding='utf-8')), filename)
+        f.close()
+        return self.app.post('/import', data=data, follow_redirects=True, content_type='multipart/form-data')
+
+    def post_nameless_file(self, filename):
+        data = {}
+        data['file'] = (io.BytesIO(bytes('test', encoding='utf-8')), '')
+        return self.app.post('/import', data=data, follow_redirects=True, content_type='multipart/form-data')
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
