@@ -105,8 +105,8 @@
                                 <p>Types: {{ card.types }}</p>
                                 <p>Id: {{ card.multiverse_id }}</p>
                             </div>
-                            <button value="{{ card.multiverse_id }}" name="add_card" class="add-card"><img
-                                    class="card-image" src="{{card.image_url}}" alt="{{ card.name }}"></button>
+                            <button value="{{ card.multiverse_id }}" name="add_card" class="add-card">
+                                <img class="card-image" src="{{card.image_url}}" alt="{{ card.name }}"></button>
                         </div>
                         {% endfor %}
                         {% else %}

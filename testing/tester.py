@@ -1,6 +1,4 @@
 """
-Unit testing for our Magic the Gathering draft simulator backend
-Run this in the parent directory
     > coverage run tester.py
     > coverage html --omit="/usr/*" --directory="./docs/python"
 """
@@ -37,7 +35,7 @@ class TestWebsite(unittest.TestCase):
         Checks for pages that should not be valid
         """
         result = self.app.get('/search/page/0')
-        self.assertEqual(result.status_code, 404)
+        self.assertEqual(result.status_code, 404, 'page 0 is not valid')
         result = self.app.get('/search/page/-1')
         self.assertEqual(result.status_code, 404)
         result = self.app.get('/search/page/')
@@ -235,6 +233,10 @@ class TestWebsite(unittest.TestCase):
         Simulates a POST request to fetch the session deck for the client
         """
         return self.app.post('/fetch', data=dict(fetch='fetch'), follow_redirects=True)
+
+    def post_file(self, f):
+        f = open('deck.json', 'r')
+        return self.app.post('/import_deck', data=dict(file=f), follow_redirects=True)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

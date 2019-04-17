@@ -25,8 +25,25 @@ function display_cards(data) {
         if (card !== "count") {
             let name = collection[card].card_name;
             let count = collection[card].count;
-            $("#draft-deck").append(`<div class="collection-card">
-                <p>${name} x ${count}</p>
+            let bg_color;
+            if(collection[card].colors.length > 1) {
+                //multicolored card
+                bg_color = 'Orange';
+            }
+            else if(collection[card].colors[0]) {
+                bg_color = collection[card].colors[0];
+            }
+            else {
+                //artifact/colorless
+                bg_color = 'Grey';
+            }
+
+            let text_color = 'Black'
+            if(bg_color === 'Black' || bg_color === 'Blue') {
+                text_color = 'White';
+            }
+            $("#draft-deck").append(`<div class="collection-card" style=background-color:${bg_color}>
+                <p style=color:${text_color} >${name} x ${count}</p>
                 <button value=${card} name="add_card" class="add-card">+</button>
                 <button value=${card} name="sub_card" class="sub-card">-</button>
                 </div>`);
