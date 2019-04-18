@@ -199,6 +199,7 @@ main {
 
 .collection-card > p {
     display: inline;
+    cursor: default;
 }
 
 .collection-header {
@@ -215,6 +216,19 @@ main {
     width: 4rem;
     float: right;
     font-size: 2rem;
+}
+
+.collection-image {
+    display: none;
+    width: 30rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.collection-card p:hover ~ .collection-image {
+    display: block;
 }
 
 .sub-card {

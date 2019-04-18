@@ -46,6 +46,7 @@ function display_cards(data) {
                 <p style=color:${text_color} >${name} x ${count}</p>
                 <button value=${card} name="add_card" class="add-card">+</button>
                 <button value=${card} name="sub_card" class="sub-card">-</button>
+                <img class="collection-image" src=${collection[card]['image_url']}>
                 </div>`);
         }
     }
