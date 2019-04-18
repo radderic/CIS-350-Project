@@ -362,6 +362,11 @@ main {
     transition: .5s;
 }
 
+#import-deck:hover {
+    color: black;
+    background-color: #49f1e1;
+}
+
 #export-btn {
     color: white;
     font-weight: 700;
@@ -372,6 +377,10 @@ main {
     padding: 1rem 2rem;
     background-color: purple;
     transition: .5s;
+}
+
+#export-btn:hover {
+    background-color: #ff00dd;
 }
 
 .flashes {
